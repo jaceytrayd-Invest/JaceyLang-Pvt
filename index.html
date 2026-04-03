@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Folio — Private Works by John Christopher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════
+   ROOT
+═══════════════════════════════════════ */
+:root {
+  --ink:        #1a1714;
+  --ink-soft:   #2e2a26;
+  --ink-raised: #252018;
+  --paper:      #f5f0e8;
+  --paper-dim:  #e8e2d6;
+  --paper-dark: #d4ccbc;
+  --text:       #2a2520;
+  --text-soft:  #5a5248;
+  --text-dim:   #8a8278;
+  --red:        #8b2020;
+  --red-soft:   #a83030;
+  --red-dim:    #5a1515;
+  --red-faint:  #f0e8e8;
+  --rule:       #c8c0b0;
+  --rule-soft:  rgba(139,32,32,0.2);
+  --serif:      'Playfair Display', Georgia, serif;
+  --body:       'Crimson Pro', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 400;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.folio-header {
+  background: var(--ink);
+  padding: 2.8rem 0 2.2rem;
+  border-bottom: 4px solid var(--red);
+  text-align: center;
+}
+
+.folio-header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.folio-eyebrow {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.folio-name {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--paper);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.folio-name span {
+  color: var(--red-soft);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.folio-tagline {
+  font-family: var(--body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+
+/* ═══════════════════════════════════════
+   INTRO BAND
+═══════════════════════════════════════ */
+.intro-band {
+  background: var(--ink-raised);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 1.4rem 0;
+  text-align: center;
+}
+
+.intro-band p {
+  font-family: var(--body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ═══════════════════════════════════════
+   LIBRARY
+═══════════════════════════════════════ */
+.library {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 6rem;
+}
+
+.library-label {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.library-count {
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════════════════
+   BOOK ROWS
+═══════════════════════════════════════ */
+.book-list { list-style: none; }
+
+.book-item {
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.book-item:first-child { border-top: 1px solid var(--rule); }
+
+.book-item:nth-child(1)  { animation-delay: 0.05s; }
+.book-item:nth-child(2)  { animation-delay: 0.10s; }
+.book-item:nth-child(3)  { animation-delay: 0.15s; }
+.book-item:nth-child(4)  { animation-delay: 0.20s; }
+.book-item:nth-child(5)  { animation-delay: 0.25s; }
+.book-item:nth-child(6)  { animation-delay: 0.30s; }
+.book-item:nth-child(7)  { animation-delay: 0.35s; }
+.book-item:nth-child(8)  { animation-delay: 0.40s; }
+.book-item:nth-child(9)  { animation-delay: 0.45s; }
+.book-item:nth-child(10) { animation-delay: 0.50s; }
+.book-item:nth-child(11) { animation-delay: 0.55s; }
+.book-item:nth-child(12) { animation-delay: 0.60s; }
+
+.book-link {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.6rem 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.book-link:hover { background: var(--red-faint); }
+.book-link:hover .book-title { color: var(--red); }
+.book-link:hover .book-arrow { color: var(--red); transform: translateX(5px); }
+
+.book-num {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--rule);
+  text-align: right;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.book-item:not(.pending) .book-num { color: var(--red-dim); }
+
+.book-body { display: flex; flex-direction: column; gap: 0.15rem; }
+
+.book-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.2s;
+  line-height: 1.3;
+}
+
+.book-item.pending .book-title {
+  color: var(--text-dim);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.book-meta {
+  font-family: var(--body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.book-status {
+  font-family: var(--body);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--rule);
+  color: var(--text-dim);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.book-item:not(.pending) .book-status {
+  border-color: var(--red-dim);
+  color: var(--red-soft);
+  background: var(--red-faint);
+}
+
+.book-arrow {
+  color: var(--rule);
+  font-size: 1rem;
+  transition: color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+.book-item:not(.pending) .book-arrow { color: var(--text-dim); }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.folio-footer {
+  background: var(--ink);
+  border-top: 4px solid var(--red);
+  padding: 2rem 0;
+}
+
+.folio-footer-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.1em;
+}
+
+.footer-note {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.footer-contact {
+  font-family: var(--body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-contact:hover { color: var(--paper-dim); }
+
+/* ═══════════════════════════════════════
+   ANIMATION
+═══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .book-link { grid-template-columns: 2.2rem 1fr; gap: 1rem; }
+  .book-status { display: none; }
+  .book-arrow { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="folio-header" id="top">
+  <div class="folio-header-inner">
+    <span class="folio-eyebrow">John Christopher · Private Works</span>
+    <h1 class="folio-name">The <span>Folio</span></h1>
+    <p class="folio-tagline">A private library of commissioned works</p>
+  </div>
+</header>
+
+<div class="intro-band">
+  <p>Each book in this collection is a commissioned private work. Select a title to read.</p>
+</div>
+
+<!-- LIBRARY -->
+<div class="library">
+  <div class="library-label">
+    <span>The Collection</span>
+    <span class="library-count">12 Books</span>
+  </div>
+
+  <ul class="book-list">
+
+    <li class="book-item">
+      <a href="book-01.html" class="book-link">
+        <span class="book-num">01</span>
+        <div class="book-body">
+          <span class="book-title">Alas, Master — For It Is Borrowed</span>
+          <span class="book-meta">Prophetic series · 16 chapters · Stewardship &amp; 2 Kings 6</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-02.html" class="book-link">
+        <span class="book-num">02</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-03.html" class="book-link">
+        <span class="book-num">03</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-04.html" class="book-link">
+        <span class="book-num">04</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-05.html" class="book-link">
+        <span class="book-num">05</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-06.html" class="book-link">
+        <span class="book-num">06</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-07.html" class="book-link">
+        <span class="book-num">07</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-08.html" class="book-link">
+        <span class="book-num">08</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-09.html" class="book-link">
+        <span class="book-num">09</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-10.html" class="book-link">
+        <span class="book-num">10</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-11.html" class="book-link">
+        <span class="book-num">11</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item pending">
+      <a href="book-12.html" class="book-link">
+        <span class="book-num">12</span>
+        <div class="book-body">
+          <span class="book-title">Pending</span>
+          <span class="book-meta">Content not yet uploaded</span>
+        </div>
+        <span class="book-status">Coming</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+<footer class="folio-footer">
+  <div class="folio-footer-inner">
+    <span class="footer-name">The Folio</span>
+    <span class="footer-note">Private works by John Christopher</span>
+    <a href="mailto:jaceylang16@outlook.com" class="footer-contact">jaceylang16@outlook.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

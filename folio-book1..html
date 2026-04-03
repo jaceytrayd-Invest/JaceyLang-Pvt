@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 01 — Alas, Master | The Folio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --ink:        #1a1714;
+  --ink-soft:   #2e2a26;
+  --ink-raised: #252018;
+  --paper:      #f5f0e8;
+  --paper-dim:  #e8e2d6;
+  --paper-dark: #d4ccbc;
+  --text:       #2a2520;
+  --text-soft:  #5a5248;
+  --text-dim:   #8a8278;
+  --red:        #8b2020;
+  --red-soft:   #a83030;
+  --red-dim:    #5a1515;
+  --red-faint:  #f0e8e8;
+  --rule:       #c8c0b0;
+  --rule-red:   rgba(139,32,32,0.25);
+  --serif:      'Playfair Display', Georgia, serif;
+  --body:       'Crimson Pro', Georgia, serif;
+  --fell:       'IM Fell English', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.book-header {
+  background: var(--ink);
+  border-bottom: 4px solid var(--red);
+  padding: 2rem 0 1.6rem;
+}
+
+.book-header-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-folio {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--paper);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.header-folio span { color: var(--red-soft); font-style: italic; font-weight: 400; }
+.header-folio:hover { color: var(--paper-dim); }
+
+.header-back {
+  font-family: var(--body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+.header-back:hover { color: var(--paper); }
+
+/* ── STICKY NAV ── */
+.book-nav {
+  background: var(--ink-soft);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.book-nav::-webkit-scrollbar { display: none; }
+
+.book-nav-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.bnav-link {
+  font-family: var(--body);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.bnav-link:hover { color: var(--paper); border-bottom-color: var(--red-soft); }
+.bnav-link.sep { color: rgba(255,255,255,0.1); padding: 0.75rem 0.2rem; cursor: default; }
+
+/* ── BOOK HERO ── */
+.book-hero {
+  background: var(--ink);
+  padding: 4rem 0 3.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+}
+
+.book-hero-inner {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.book-eyebrow {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+.book-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--paper);
+  line-height: 1.2;
+  margin-bottom: 0.7rem;
+}
+
+.book-verse {
+  font-family: var(--fell);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.book-intro {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+
+/* ── TOC ── */
+.toc-section {
+  background: var(--ink-raised);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 2rem 0;
+}
+
+.toc-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.toc-label {
+  font-family: var(--body);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1rem 2rem;
+}
+
+@media (max-width: 560px) { .toc-grid { grid-template-columns: 1fr; } }
+
+.toc-grid a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 0.3rem 0.4rem;
+  transition: color 0.15s, background 0.15s;
+  border-radius: 2px;
+}
+.toc-grid a:hover { color: var(--paper); background: rgba(255,255,255,0.04); }
+
+.toc-n {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: var(--red-dim);
+  min-width: 2rem;
+  flex-shrink: 0;
+  letter-spacing: 0.06em;
+  font-family: var(--body);
+}
+
+/* ── CONTENT ── */
+.book-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.chapter:last-child { border-bottom: none; }
+
+.chapter-label {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red-dim);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.chapter-title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 2rem;
+}
+
+/* ── PROSE ── */
+.stanza {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text);
+  margin: 1.2rem 0;
+}
+.stanza .line { display: block; }
+.stanza em { font-style: italic; color: var(--text-soft); }
+
+.prose-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 1.6rem 0;
+}
+
+.pull-quote {
+  border-left: 3px solid var(--red);
+  padding: 0.4rem 0 0.4rem 1.4rem;
+  margin: 2rem 0;
+  font-family: var(--fell);
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--red);
+  line-height: 1.65;
+}
+
+/* ── SERMON ── */
+.sermon-panel {
+  background: var(--ink-raised);
+  border: 1px solid var(--rule-red);
+  padding: 2.4rem 2.2rem;
+  margin-top: 0.5rem;
+  position: relative;
+}
+.sermon-panel::before {
+  content: '❧';
+  position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%);
+  background: var(--paper); padding: 0 0.6rem;
+  color: var(--red-dim); font-size: 1rem;
+}
+.sermon-label {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1.4rem;
+}
+.sermon-body {
+  font-family: var(--fell);
+  font-size: 1rem;
+  line-height: 1.88;
+  color: var(--paper);
+}
+.sermon-body p { margin-bottom: 1rem; }
+.sermon-cry {
+  text-align: center;
+  font-size: 1.08rem;
+  color: var(--red-soft);
+  font-style: italic;
+  margin: 1.4rem 0;
+}
+
+/* ── HYMN ── */
+.hymn-wrap { text-align: center; margin-top: 0.5rem; }
+.hymn-desc {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.hymn-body {
+  display: inline-block;
+  text-align: left;
+  font-family: var(--fell);
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--text);
+}
+.hymn-verse { display: block; margin-bottom: 1.6rem; }
+.hymn-line { display: block; }
+
+/* ── CLOSING ── */
+.closing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+@media (max-width: 560px) { .closing-grid { grid-template-columns: 1fr; } }
+.closing-card {
+  background: var(--paper-dim);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--red);
+  padding: 1.3rem 1.5rem;
+}
+.closing-card-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.closing-card-body {
+  font-family: var(--body);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+.closing-final {
+  margin-top: 2rem;
+  border-left: 3px solid var(--red);
+  padding: 0.4rem 0 0.4rem 1.4rem;
+  font-family: var(--fell);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--red);
+  line-height: 1.65;
+}
+.closing-sig {
+  margin-top: 1.4rem;
+  font-family: var(--body);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+.closing-sig a { color: var(--red-dim); text-decoration: none; }
+.closing-sig a:hover { color: var(--red); }
+
+/* ── CHAPTER NAV ── */
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0 0;
+  margin-top: 1rem;
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.chapter-nav a {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  color: var(--red-dim);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.chapter-nav a:hover { color: var(--red); }
+
+/* ── FOOTER ── */
+.book-footer {
+  background: var(--ink);
+  border-top: 4px solid var(--red);
+  padding: 2rem 0;
+}
+.book-footer-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-folio {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+.footer-folio span { color: var(--red-soft); font-style: italic; }
+.footer-note { font-family: var(--body); font-style: italic; font-size: 0.88rem; color: var(--text-dim); }
+.footer-back { font-family: var(--body); font-size: 0.88rem; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.footer-back:hover { color: var(--paper); }
+
+/* ── FLOATING TOP ── */
+.fab {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.fab.visible { opacity: 1; pointer-events: auto; }
+.fab a {
+  display: block;
+  padding: 0.6rem 1.1rem;
+  background: var(--ink);
+  border: 1px solid var(--red-dim);
+  font-family: var(--body);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s;
+}
+.fab a:hover { color: var(--paper); border-color: var(--red-soft); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .book-header-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="book-header" id="top">
+  <div class="book-header-inner">
+    <a href="folio-index.html" class="header-folio">The <span>Folio</span></a>
+    <a href="folio-index.html" class="header-back">← All Books</a>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="book-nav">
+  <div class="book-nav-inner">
+    <a href="folio-index.html"  class="bnav-link">← Library</a>
+    <span class="bnav-link sep">|</span>
+    <a href="#toc"        class="bnav-link">Contents</a>
+    <span class="bnav-link sep">|</span>
+    <a href="#intro"      class="bnav-link">Opening</a>
+    <a href="#part-1"     class="bnav-link">I</a>
+    <a href="#part-2"     class="bnav-link">II</a>
+    <a href="#part-3"     class="bnav-link">III</a>
+    <a href="#part-4"     class="bnav-link">IV</a>
+    <a href="#part-5"     class="bnav-link">V</a>
+    <a href="#part-6"     class="bnav-link">VI</a>
+    <a href="#part-7"     class="bnav-link">VII</a>
+    <a href="#part-8"     class="bnav-link">VIII</a>
+    <a href="#part-9"     class="bnav-link">IX</a>
+    <a href="#part-10"    class="bnav-link">X</a>
+    <a href="#part-11"    class="bnav-link">XI</a>
+    <a href="#part-12"    class="bnav-link">XII</a>
+    <a href="#closing"    class="bnav-link">Closing</a>
+    <a href="#sermon"     class="bnav-link">Sermon</a>
+    <a href="#anthem"     class="bnav-link">Anthem</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="book-hero">
+  <div class="book-hero-inner">
+    <span class="book-eyebrow">The Folio · Book 01 of 12</span>
+    <h1 class="book-title">Alas, Master —<br>For It Is Borrowed</h1>
+    <p class="book-verse">2 Kings 6:5 — "Alas, master! for it was borrowed."</p>
+    <p class="book-intro">A prophetic series in sixteen chapters — on stewardship, borrowed authority, and the mercy that lifts what sank.</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-section" id="toc">
+  <div class="toc-inner">
+    <span class="toc-label">Contents — 16 Chapters</span>
+    <div class="toc-grid">
+      <a href="#intro">   <span class="toc-n">Opening</span>Introduction</a>
+      <a href="#part-1">  <span class="toc-n">I</span>Borrowed, Not Owned</a>
+      <a href="#part-2">  <span class="toc-n">II</span>The Slip You Didn't Feel</a>
+      <a href="#part-3">  <span class="toc-n">III</span>When Iron Sinks</a>
+      <a href="#part-4">  <span class="toc-n">IV</span>Swinging Without Edge</a>
+      <a href="#part-5">  <span class="toc-n">V</span>The Betrayal No One Sees</a>
+      <a href="#part-6">  <span class="toc-n">VI</span>Dim Light &amp; False Normalcy</a>
+      <a href="#part-7">  <span class="toc-n">VII</span>The Shock of Realization</a>
+      <a href="#part-8">  <span class="toc-n">VIII</span>Entitlement in Holy Things</a>
+      <a href="#part-9">  <span class="toc-n">IX</span>Standing at the Water's Edge</a>
+      <a href="#part-10"> <span class="toc-n">X</span>The Cry That Breaks You</a>
+      <a href="#part-11"> <span class="toc-n">XI</span>When Iron Defies Nature</a>
+      <a href="#part-12"> <span class="toc-n">XII</span>Mercy That Lifts What Sank</a>
+      <a href="#closing"> <span class="toc-n">✦</span>Closing — A Word on Stewardship</a>
+      <a href="#sermon">  <span class="toc-n">❧</span>Sermon — Funds Held in Trust</a>
+      <a href="#anthem">  <span class="toc-n">♩</span>Anthem — The Song of Stewardship</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="book-content">
+
+  <!-- INTRO -->
+  <div class="chapter" id="intro">
+    <span class="chapter-label">Opening</span>
+    <h2 class="chapter-title">The Cry Before the Series</h2>
+    <div class="stanza"><span class="line">There is a kind of loss that does not announce itself when it begins.</span><span class="line">No noise. No rupture. No visible fall.</span><span class="line">Just a slow, quiet leaking of something you once held with fear.</span></div>
+    <div class="stanza"><span class="line">And you don't notice it immediately.</span><span class="line">You keep moving. Keep speaking.</span><span class="line">Keep responding the way you always have.</span><span class="line">Nothing looks broken. Nothing <em>seems</em> gone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Until one moment— not loud, not dramatic— just… undeniable.</span><span class="line">Something is not where it used to be.</span><span class="line">Not gone entirely. But not whole either.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And suddenly, without preparation, without polished language— you understand him.</span><span class="line">In Bible Second Kings 6:5, a man does not preach.</span><span class="line">He does not explain. He cries.</span></div>
+    <div class="pull-quote">"Alas, master! for it was borrowed."</div>
+    <div class="stanza"><span class="line">That cry is not theology. It is shock colliding with truth.</span><span class="line">It is the sound of a man who just realized two things at once—</span><span class="line">he has lost something, and he had no right to lose it.</span></div>
+    <div class="stanza"><span class="line">Because what fell into the Jordan River was not just iron.</span><span class="line">It was pretense.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Somewhere before the fall, before the slip,</span><span class="line">before the sound of it vanishing beneath the surface—</span><span class="line">he had grown used to holding it. Too used to it.</span></div>
+    <div class="stanza"><span class="line">Borrowed things, over time, begin to feel like they belong to you.</span><span class="line">You stop checking. Stop fearing.</span><span class="line">Stop handling them like they could be taken.</span></div>
+    <div class="stanza"><span class="line">Until they are.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And the river is merciless in that way.</span><span class="line">It does not expose you gradually.</span><span class="line">It swallows everything at once— the object, the illusion,</span><span class="line">the quiet pride that came with it.</span></div>
+    <div class="stanza"><span class="line">Now there is no room for performance.</span><span class="line">No space to explain.</span><span class="line">No language strong enough to recover dignity.</span><span class="line">Only a cry. Raw. Unfiltered. Almost embarrassing in its honesty:</span></div>
+    <div class="pull-quote">"Alas…"</div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Because what do you say when you didn't walk away from God—</span><span class="line">but something of Him is no longer resting on you like it once did?</span><span class="line">What do you call it when prayer still exists, but weight is missing?</span><span class="line">When truth still sounds right, but does not cut as deep?</span><span class="line">When sin is still avoided— but no longer mourned?</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">This is not open rebellion.</span><span class="line">This is something harder to detect.</span><span class="line">A thinning. A quiet drifting into handling holy things without trembling.</span></div>
+    <div class="stanza"><span class="line">And one day— you feel it.</span><span class="line">Not fully gone. But not fully there.</span><span class="line">And in that moment, you are no longer reading that passage.</span><span class="line">You are standing in it. Handle in hand. Heart sinking. No explanation left.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">This series comes from that place.</span><span class="line">Not from strength. Not from clarity.</span><span class="line">But from the edge of realization—</span><span class="line">where something has slipped, and you cannot pretend you didn't feel it go.</span></div>
+    <div class="stanza"><span class="line">It will not rush you to comfort.</span><span class="line">It will not quickly restore you.</span><span class="line">It will not let you hide behind language.</span><span class="line">It will walk you down to the water and leave you there long enough to tell the truth.</span></div>
+    <div class="stanza"><span class="line">Because before anything can be lifted— before mercy moves—</span><span class="line">before anything impossible happens—</span><span class="line">there must be a cry that is finally honest:</span></div>
+    <div class="pull-quote">"It was borrowed."</div>
+  </div>
+
+  <!-- PART I -->
+  <div class="chapter" id="part-1">
+    <span class="chapter-label">Part I</span>
+    <h2 class="chapter-title">Borrowed, Not Owned</h2>
+    <div class="pull-quote">Alas, master.</div>
+    <div class="stanza"><span class="line">Not "my axe head." Not "something misplaced." Not "what I earned."</span><span class="line">It was borrowed. And that is the first knife.</span><span class="line">The one that cuts deep because it is truth.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Once upon a time, he might have pretended it was his.</span><span class="line">A little lie. A touch of pride.</span><span class="line">A swinging of borrowed authority as if the weight in his hand proved possession.</span><span class="line">But the Jordan River swallowed it all.</span></div>
+    <div class="stanza"><span class="line">The iron sank. And with it: the ego. The pretense.</span><span class="line">The quiet arrogance that whispered, <em>"I can hold this forever."</em></span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">He did not shout. He did not calculate.</span><span class="line">He did not argue with the river.</span><span class="line">He just wailed. Howled. Cried like a man whose language is caught in his throat.</span><span class="line">Because there is nothing you can say when the sacred is gone.</span><span class="line">When what was lent to you is no longer resting on your hands.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And yet— there is a faint trace.</span><span class="line">A thin mercy still moving in the moment: The tree.</span><span class="line">The one that will carry him long before he knows its name.</span><span class="line">Long before its branches will lift the world.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">He clings to the prophet. Desperate. Exposed.</span><span class="line">Knowing nothing but faith can intervene.</span><span class="line">He does not know how it will return.</span><span class="line">He does not know if it will rise.</span><span class="line">He only knows he cannot retrieve it alone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Because iron cannot float.</span><span class="line">Weight cannot hang in midair by effort.</span><span class="line">Power cannot linger where it is not given.</span></div>
+    <div class="stanza"><span class="line">And this is the terror of stewardship:</span><span class="line">You can hold the handle. You can swing the motion. You can keep the rhythm.</span><span class="line">But if God's presence lifts, it becomes a hidden betrayal.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.<br><br>Not sorrow for loss. Not complaint for inconvenience.<br>Not longing for return. Mortification.</div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Because if it were yours— you could recover it.</span><span class="line">If it were yours— you could sharpen it again.</span><span class="line">If it were yours— effort might restore it. But it wasn't.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And now he is left with nothing but the echo of what he had:</span><span class="line">The handle. The memory of weight.</span><span class="line">The tremor of fear. The first, desperate, gasping cry:</span></div>
+    <div class="pull-quote">"Alas, master… it was borrowed."</div>
+    <div class="stanza"><span class="line">And somewhere in that wail, he begins to see it:</span><span class="line">The mercy is coming.</span><span class="line">Not because he deserves it. Not because he earned it.</span><span class="line">But because God is merciful.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The axe may have sunk. The river may have swallowed it. But the tree is there.</span><span class="line">And the mercy of God waits,</span><span class="line">even for those who have handled the sacred carelessly.</span></div>
+    <div class="pull-quote">"It was never mine, but You still see me."</div>
+  </div>
+
+  <!-- PART II -->
+  <div class="chapter" id="part-2">
+    <span class="chapter-label">Part II</span>
+    <h2 class="chapter-title">The Slip You Didn't Feel</h2>
+    <div class="stanza"><span class="line">It didn't begin with the fall.</span><span class="line">Not with the splash of iron.</span><span class="line">Not with the gasp of the river swallowing what was lent.</span><span class="line">It began somewhere quieter. Somewhere almost invisible.</span><span class="line">Where the handle was still in your hand,</span><span class="line">and you didn't notice the weight shifting.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">A moment of distraction. A pause in vigilance.</span><span class="line">A thought: <em>"It will always be here. I've carried it long enough."</em></span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">That is where the betrayal starts.</span><span class="line">Not loud. Not scandalous. Not even sinful in the obvious sense.</span><span class="line">But deadly.</span></div>
+    <div class="stanza"><span class="line">Because spiritual things do not hover.</span><span class="line">They do not wait politely. They do not tolerate familiarity.</span><span class="line">They sink.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">He kept swinging. The motion was familiar.</span><span class="line">From the outside, nothing seemed changed.</span><span class="line">But inside, something was gone.</span><span class="line">The edge dulled. The presence thinned. The sensitivity waned.</span><span class="line">And you did not feel it. Not yet.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">You still prayed. You still responded. You still avoided what was wrong.</span><span class="line">But the river was already moving, already taking,</span><span class="line">already exposing what you had quietly begun to treat as yours.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And the terror is in that invisibility:</span><span class="line">You can carry what is empty and no one will see it.</span><span class="line">You can speak with memory and still sound like truth.</span><span class="line">You can continue in service and still be hollow.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The slip is the quiet collapse.</span><span class="line">The unnoticed abandonment of what you were entrusted to guard.</span></div>
+    <div class="stanza"><span class="line">And then one day— you feel it.</span><span class="line">A lightness. A thinness. A faint panic that rises without warning.</span><span class="line">The handle is still there. The motion continues. But the weight is gone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And for the first time, you realize the depth of what you ignored:</span><span class="line">That which was borrowed cannot be treated as yours.</span></div>
+    <div class="stanza"><span class="line">The river has already done its work.</span><span class="line">The water has taken the iron. The pretense has gone under.</span><span class="line">And you are left with the tremor in your chest:</span><span class="line">The slip you didn't feel. The moment that set everything in motion.</span></div>
+    <div class="pull-quote">"Alas, master… it was borrowed."</div>
+    <div class="stanza"><span class="line">Because now you know: It was never just about losing an object.</span><span class="line">It was about losing vigilance. Losing fear. Losing faithfulness.</span><span class="line">And you cannot retrieve that by yourself.</span><span class="line">The only hope is mercy. The only path back is the One who sees.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The tree is still there, waiting.</span><span class="line">Even for those who only now feel the slip.</span><span class="line">Even for those who only now begin to wail.</span><span class="line">Even for those who only now see the betrayal in their hands.</span></div>
+  </div>
+
+  <!-- PART III -->
+  <div class="chapter" id="part-3">
+    <span class="chapter-label">Part III</span>
+    <h2 class="chapter-title">When Iron Sinks</h2>
+    <div class="stanza"><span class="line">Iron does not float.</span><span class="line">Not in water. Not in heaven. Not in the spirit.</span></div>
+    <div class="stanza"><span class="line">This is the hard truth the sons of the prophets could not soften:</span><span class="line">Whatever is neglected, whatever is treated as yours instead of borrowed,</span><span class="line">descends. It sinks quietly. It sinks fast. It sinks without asking your permission.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The axe head did not argue. It did not fight.</span><span class="line">It simply obeyed the law of its nature:</span><span class="line">Weight cannot stay suspended where it is not held by God.</span></div>
+    <div class="stanza"><span class="line">And neither can spiritual things.</span><span class="line">Presence. Sensitivity. Faithful testimony.</span><span class="line">A good conscience. Trust from others.</span><span class="line">All of it sinks if you fail as a steward.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">You keep moving. You keep swinging. You keep performing.</span><span class="line">But what once carried weight no longer does.</span></div>
+    <div class="stanza"><span class="line">And the horror is this:</span><span class="line">People still trust you. People still believe you are sharp.</span><span class="line">People still rely on the rhythm of your swing.</span><span class="line">All the while, the iron has gone under. And you know it.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The river takes no excuses. It swallows the ego along with the edge.</span><span class="line">It unmasks the small lie:</span><span class="line"><em>You thought this was yours. You thought it would always be there.</em></span></div>
+    <div class="stanza"><span class="line">There is no ceremony in sinking.</span><span class="line">No judgment pronounced. No dramatic trumpet.</span><span class="line">Just silence. Just absence.</span><span class="line">Just the weight that is no longer resting on your hands.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And in that silence, you realize:</span><span class="line">You were never carrying iron.</span><span class="line">You were carrying memory. You were swinging empty.</span></div>
+    <div class="pull-quote">Alas, master. "It was borrowed."</div>
+    <div class="stanza"><span class="line">And yet— there is still mercy.</span><span class="line">The tree is waiting. The cross has already been cast in place.</span><span class="line">The river cannot undo what God's mercy will lift.</span><span class="line">But first… you must watch the iron sink.</span><span class="line">You must feel the weight leave.</span><span class="line">You must face the terrifying truth that what you held was never yours to keep.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Only then can the impossible begin:</span><span class="line">Iron rising. Presence restored. Faithfulness returned.</span><span class="line">Not by effort. Not by pride. Not by pretense.</span><span class="line">But by God alone.</span></div>
+  </div>
+
+  <!-- PART IV -->
+  <div class="chapter" id="part-4">
+    <span class="chapter-label">Part IV</span>
+    <h2 class="chapter-title">Swinging Without Edge</h2>
+    <div class="stanza"><span class="line">And here is the cruelest part: You keep swinging.</span><span class="line">The handle is in your hand. The motion is familiar.</span><span class="line">From the outside, nothing seems wrong.</span><span class="line">But inside… The edge is gone. The weight is gone. The presence is gone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">You continue as if nothing has changed.</span><span class="line">You speak with confidence. You respond with authority. You minister, advise, lead.</span><span class="line">All the while, what once made your words sharp</span><span class="line">and your actions heavy has sunk beneath the water.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And the terror is subtle:</span><span class="line">No one can see it. No one can measure it.</span><span class="line">No one can confront it— except the One who lent it to you in the first place.</span></div>
+    <div class="stanza"><span class="line">You are trusted because of memory.</span><span class="line">Because of what once rested on you.</span><span class="line">Because of the edge you used to carry.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And that is betrayal in the quietest sense.</span><span class="line">Not rebellion. Not open sin.</span><span class="line">But emptiness masquerading as presence.</span><span class="line">Form without power. Motion without substance. Speech without presence.</span></div>
+    <div class="pull-quote">"Alas… master… it was borrowed."</div>
+    <div class="stanza"><span class="line">You are standing at the river,</span><span class="line">swinging a handle that carries no iron,</span><span class="line">and the world cannot tell the difference.</span><span class="line">Only God sees. Only the prophet sees. Only your conscience knows.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">This is the danger of familiarity:</span><span class="line">To continue in motion while the essential has left.</span><span class="line">To believe you are faithful when you are only imitating faithfulness.</span></div>
+    <div class="stanza"><span class="line">And yet— there is still a thin thread of hope.</span><span class="line">Because the tree waits. The mercy waits. The impossible waits.</span><span class="line">But first, you must see yourself swinging without edge.</span><span class="line">First, you must wail. First, you must recognize:</span><span class="line">You cannot restore what was never yours.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Alas, master. It was borrowed.</span><span class="line">And until you truly face that, the swing is empty.</span><span class="line">The words are hollow.</span><span class="line">The ministry is a shadow of what God intended.</span></div>
+  </div>
+
+  <!-- PART V -->
+  <div class="chapter" id="part-5">
+    <span class="chapter-label">Part V</span>
+    <h2 class="chapter-title">The Betrayal No One Sees</h2>
+    <div class="stanza"><span class="line">This is the cruelest betrayal:</span><span class="line">Not the river taking the iron. Not the slip unnoticed.</span><span class="line">Not even the dulling of the edge.</span><span class="line">No. The worst betrayal is what others believe is still there.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">They trust you. They follow your counsel. They rely on your presence.</span><span class="line">All the while, you know— deep down—</span><span class="line">Something essential has left your hands.</span><span class="line">Something sacred has slipped from your grip.</span><span class="line">And yet, from their eyes, you appear untouched.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">This is the terror of stewardship:</span><span class="line">You are holding what is no longer yours,</span><span class="line">and everyone assumes you are still faithful.</span><span class="line">They believe in the weight that once rested on you.</span><span class="line">They rely on the fire that once burned in your spirit.</span><span class="line">They see a motion that looks like ministry.</span><span class="line">But inside… The iron is gone. The edge is gone. The presence is gone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And here is where shame becomes sharp:</span><span class="line">Because you cannot confess it easily.</span><span class="line">Because admitting it exposes more than failure.</span><span class="line">Because the world cannot see what God already knows.</span></div>
+    <div class="stanza"><span class="line">You are carrying trust without the substance to sustain it.</span><span class="line">You are walking in memory while heaven measures reality.</span><span class="line">You are performing in form while substance has left.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And yet… Even in the terror, even in the guilt,</span><span class="line">there is a fragile thread:</span><span class="line">The prophet is still there. Mercy is still there.</span><span class="line">The tree waits in the water, ready to lift what sank.</span></div>
+    <div class="stanza"><span class="line">But first… You must face the betrayal no one sees.</span><span class="line">You must see it in yourself before mercy can move.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.</div>
+    <div class="stanza"><span class="line">And until you reckon with this hidden betrayal, you cannot move forward.</span><span class="line">You cannot recover.</span><span class="line">You cannot truly speak with the weight you once held.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Only when the cry becomes honest—</span><span class="line">"It was borrowed, and I have failed as a steward"—</span><span class="line">Only then can mercy find a place to act.</span></div>
+  </div>
+
+  <!-- PART VI -->
+  <div class="chapter" id="part-6">
+    <span class="chapter-label">Part VI</span>
+    <h2 class="chapter-title">Dim Light and False Normalcy</h2>
+    <div class="stanza"><span class="line">There comes a season where you move in dim light.</span><span class="line">Not darkness. Not full night. Just dim.</span><span class="line">Enough to keep going. Enough to perform.</span><span class="line">Enough to convince yourself you are fine.</span></div>
+    <div class="stanza"><span class="line">And for a while, you are.</span><span class="line">You are functional. You are seen as faithful.</span><span class="line">You are trusted. You are even respected.</span><span class="line">But inside… Something is off. Something is missing.</span><span class="line">A weight that once cut through every moment is gone.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">This is the danger of false normalcy:</span><span class="line">You no longer tremble at sin.</span><span class="line">You no longer grieve what is wrong.</span><span class="line">You no longer feel the holy pressure</span><span class="line">that once kept your hands careful and your steps aligned.</span></div>
+    <div class="stanza"><span class="line">You are still moving,</span><span class="line">but the river has already taken what gave your motion its edge.</span><span class="line">You can preach. You can pray. You can respond.</span><span class="line">But you are dimmer. You are thinner.</span><span class="line">You are no longer the man who trembled at God's presence.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And that is the subtle, crushing terror:</span><span class="line">You have drifted into entitlement disguised as routine.</span><span class="line">You handle what was borrowed as if it were permanently yours.</span><span class="line">You convince yourself that everything is fine,</span><span class="line">while heaven quietly counts what you have lost.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">But even here, mercy waits.</span><span class="line">The tree is still in the water. The cross is still coming.</span><span class="line">The One who lent the weight is still able to restore what sank.</span></div>
+    <div class="stanza"><span class="line">Yet first, you must recognize:</span><span class="line">The dim light is not normal. The ease is not safety.</span><span class="line">The absence of grief is not peace.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.</div>
+    <div class="stanza"><span class="line">And until you feel the hollow, until you recognize the false normalcy,</span><span class="line">you will continue swinging in form—</span><span class="line">while the edge remains at the river bottom.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Only the cry that admits "I am dim, I am careless, I am failing"—</span><span class="line">Only that cry opens a place for mercy to act.</span></div>
+  </div>
+
+  <!-- PART VII -->
+  <div class="chapter" id="part-7">
+    <span class="chapter-label">Part VII</span>
+    <h2 class="chapter-title">The Shock of Realization</h2>
+    <div class="stanza"><span class="line">Then the light returns.</span><span class="line">Not slowly, not gently. But in a way that blinds you.</span><span class="line">It hits like a sudden sun after a long dim winter.</span><span class="line">And everything you thought was steady, solid, faithful, begins to tremble.</span></div>
+    <div class="stanza"><span class="line">You see the truth of your hands. The truth of your swing. The truth of your motion.</span><span class="line">And it terrifies you.</span><span class="line">Because for the first time, you realize:</span><span class="line">You have been living in memory. You have been carrying shadows.</span><span class="line">You have been trusted for what is no longer present in you.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The shock is sharp:</span><span class="line">The grace you once handled with trembling has slipped.</span><span class="line">The edge you once wielded is dulled.</span><span class="line">The presence you once carried is thinner than you imagined.</span><span class="line">And with this realization comes the cry, broken and raw:</span></div>
+    <div class="pull-quote">"Alas, master… it was borrowed!"<br><br><em style="font-size:0.92rem">Not as a teaching. Not as a confession to be praised.<br>But as the desperate gasp of a man facing what he allowed to sink.</em></div>
+    <div class="stanza"><span class="line">It is a holy terror:</span><span class="line">To see that what you assumed was yours was never yours.</span><span class="line">To see that what others still trust you for is only what memory can imitate.</span><span class="line">To see that the motion of ministry, service, and life</span><span class="line">is no longer empowered by what was lent.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And in that shock, two things happen:</span><span class="line">1. The illusion of entitlement dies.</span><span class="line">2. The necessity of mercy becomes undeniable.</span></div>
+    <div class="stanza"><span class="line">You cannot explain it away. You cannot recover it alone.</span><span class="line">You cannot pretend it is fine.</span><span class="line">The river has shown the truth.</span><span class="line">The tree is the only hope. The prophet is the only guide.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Alas, master. It was borrowed.</span><span class="line">And until you face the shock, you will continue swinging—</span><span class="line">but without the weight, the edge, the power that once made your motion holy.</span></div>
+  </div>
+
+  <!-- PART VIII -->
+  <div class="chapter" id="part-8">
+    <span class="chapter-label">Part VIII</span>
+    <h2 class="chapter-title">Entitlement in Holy Things</h2>
+    <div class="stanza"><span class="line">Here is the sin that hides beneath all others: Entitlement.</span><span class="line">Not rebellion. Not open defiance.</span><span class="line">Not the kind of failure that shouts for attention.</span><span class="line">No. This is subtler. Deadlier.</span><span class="line">The quiet arrogance that whispers:</span></div>
+    <div class="pull-quote"><em>"It is mine to carry.<br>It will never be taken.<br>I earned this. I deserve this."</em></div>
+    <div class="stanza"><span class="line">You begin to treat what is borrowed as if it were permanent.</span><span class="line">You handle presence carelessly.</span><span class="line">You speak with authority you did not check.</span><span class="line">You move without trembling where once you trembled.</span><span class="line">And all the while, heaven is waiting for faithfulness.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">But you… You are comfortable. You are confident. You are entitled.</span><span class="line">And that entitlement sinks the iron faster than any river.</span></div>
+    <div class="stanza"><span class="line">It is the betrayal that cuts deepest:</span><span class="line">You do not realize you are failing.</span><span class="line">You do not feel the erosion inside your soul.</span><span class="line">You convince yourself you are faithful</span><span class="line">while the weight, the edge, the life-giving presence is quietly slipping away.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And the moment you notice— if you notice at all—</span><span class="line">The axe is gone. The river has swallowed the proof.</span><span class="line">The little lie you carried about ownership has been exposed.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.<br>Not yours to claim. Not yours to swing. Not yours to trust in.</div>
+    <div class="stanza"><span class="line">And yet, mercy waits.</span><span class="line">The tree is still in the river. The cross still carries hope.</span><span class="line">The One who lent the iron is still able to lift it again.</span><span class="line">But first… You must confess the entitlement.</span><span class="line">You must feel the shame. You must wail the cry:</span></div>
+    <div class="pull-quote">"It was borrowed, and I treated it as mine."</div>
+    <div class="stanza"><span class="line">Only then can what sank begin to rise.</span><span class="line">Only then can mercy enter where pride once ruled.</span></div>
+  </div>
+
+  <!-- PART IX -->
+  <div class="chapter" id="part-9">
+    <span class="chapter-label">Part IX</span>
+    <h2 class="chapter-title">Standing at the Water's Edge</h2>
+    <div class="stanza"><span class="line">And now— you are here.</span><span class="line">Handle in hand. Heart racing. Breath caught.</span><span class="line">The river before you is calm.</span><span class="line">The water reflects nothing of your pretense.</span><span class="line">Only the absence. Only the weight that is gone.</span></div>
+    <div class="stanza"><span class="line">You cannot retrieve it. You cannot rewind time.</span><span class="line">You cannot claim it back with effort or speech.</span><span class="line">You are left with one thing: Your own emptiness.</span><span class="line">And it is terrifying.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Because standing here, you see it all:</span><span class="line">The pride that thought it owned what was lent.</span><span class="line">The negligence that allowed weight to slip.</span><span class="line">The subtle entitlement that made carelessness feel safe.</span><span class="line">Everything. Exposed.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">No words, no motion, no plan can fix this.</span><span class="line">No memory, no reputation, no skill can restore what has gone under.</span><span class="line">Only mercy can.</span></div>
+    <div class="stanza"><span class="line">So you stand. Shame burning in your chest.</span><span class="line">Fear trembling in your bones. Faith clinging by the smallest thread.</span><span class="line">And you do what the man before you did:</span><span class="line">You wail. You howl.</span><span class="line">You cry until the sound breaks through the disbelief.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.</div>
+    <div class="stanza"><span class="line">And in that wail— something fragile appears:</span><span class="line">Hope. Mercy. The tree waiting in the water.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">You cannot take it. You cannot earn it. You cannot command it.</span><span class="line">You can only receive it.</span></div>
+    <div class="stanza"><span class="line">And standing at the water's edge,</span><span class="line">with nothing left but honesty and faith, you begin to understand:</span><span class="line">This is where the impossible begins.</span></div>
+  </div>
+
+  <!-- PART X -->
+  <div class="chapter" id="part-10">
+    <span class="chapter-label">Part X</span>
+    <h2 class="chapter-title">The Cry That Breaks You</h2>
+    <div class="stanza"><span class="line">And here it comes— the cry that cannot be rehearsed.</span><span class="line">Not a prayer. Not a clever confession. Not a polished repentance.</span><span class="line">Just the raw, jagged sound of a soul recognizing the truth:</span></div>
+    <div class="pull-quote">"It was borrowed."</div>
+    <div class="stanza"><span class="line">It hits the chest like iron. It shatters the pride.</span><span class="line">It unmasks the pretense.</span><span class="line">It unmakes the illusions you carried like armor.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Because this cry does not ask for restoration.</span><span class="line">It does not bargain. It does not plead with heaven. It only says:</span></div>
+    <div class="pull-quote">"I am empty.<br>I failed as a steward.<br>I cannot recover what was lent to me.<br>Alas, master!"</div>
+    <div class="stanza"><span class="line">And that is holy terror.</span><span class="line">To see your own hands— hands that swung, served, advised, moved—</span><span class="line">and realize they were holding nothing.</span><span class="line">To recognize that others trusted you for what you no longer carried.</span><span class="line">To know that the river has taken more than iron.</span><span class="line">It has taken pretense. It has taken entitlement.</span><span class="line">It has swallowed the quiet pride that you thought made you strong.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And yet… Even as the cry breaks you, mercy lingers.</span><span class="line">The tree waits. The cross waits.</span><span class="line">The One who lent what sank is able to restore it in ways your hands cannot.</span></div>
+    <div class="stanza"><span class="line">This is the cry that opens the heart to revival.</span><span class="line">Not because it deserves revival. Not because it earned it.</span><span class="line">But because God's mercy moves where the honest wail is heard.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.<br><br>And only when the cry pierces your soul—<br>only when you are undone in spirit—<br>can the mercy that lifts iron begin to work.</div>
+    <div class="stanza"><span class="line">It is not comfort. It is not reassurance.</span><span class="line">It is the first step toward resurrection.</span></div>
+  </div>
+
+  <!-- PART XI -->
+  <div class="chapter" id="part-11">
+    <span class="chapter-label">Part XI</span>
+    <h2 class="chapter-title">When Iron Defies Nature</h2>
+    <div class="stanza"><span class="line">And then— if mercy moves— something impossible happens.</span><span class="line">The iron rises.</span><span class="line">Not because of your effort. Not because of your striving.</span><span class="line">Not because you finally "got it right."</span><span class="line">It rises because God acts.</span><span class="line">Because the tree casts its shadow over the river.</span><span class="line">Because the One who lent what sank</span><span class="line">decides to restore it in ways that defy nature.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">You may still be trembling.</span><span class="line">You may still feel the weight of shame.</span><span class="line">You may still wail from the edge of the water.</span><span class="line">But the impossible begins to lift.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">Iron cannot float.</span><span class="line">Spiritual presence cannot persist without God's backing.</span><span class="line">Faithfulness cannot survive on memory alone.</span><span class="line">And yet, here it is:</span><span class="line">Rising. Returning. Restored by mercy, not by motion.</span></div>
+    <div class="stanza"><span class="line">This is the mystery of stewardship:</span><span class="line">What was borrowed cannot be owned.</span><span class="line">What was lent cannot be manipulated.</span><span class="line">What was lost cannot be reclaimed by human effort.</span><span class="line">It rises only because God wills it.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And in that rising, the heart trembles.</span><span class="line">Because now you see it clearly:</span><span class="line">It was never yours to begin with.</span><span class="line">It is never yours to maintain.</span><span class="line">It can only be received— again and again— as a gift.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.<br><br>And only when the iron defies its nature,<br>only when the river cannot hold it down,<br>do we fully understand the mercy of God that lifts what we could not.</div>
+    <div class="stanza"><span class="line">Praise Him.</span><span class="line">For what sinks by human failing can rise by divine power.</span><span class="line">For what we lost in negligence can return in unimaginable grace.</span></div>
+  </div>
+
+  <!-- PART XII -->
+  <div class="chapter" id="part-12">
+    <span class="chapter-label">Part XII</span>
+    <h2 class="chapter-title">Mercy That Lifts What Sank</h2>
+    <div class="stanza"><span class="line">And now we come to the final revelation: Mercy.</span><span class="line">Not earned. Not deserved. Not the reward of effort. But mercy.</span></div>
+    <div class="stanza"><span class="line">The tree stands in the river. The cross stretches into the sky.</span><span class="line">The One who lent what sank moves in a way the world cannot understand.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">What was lost— the edge, the presence, the weight— rises.</span><span class="line">Not because you were faithful enough.</span><span class="line">Not because you finally measured up.</span><span class="line">Not because your wailing convinced heaven.</span><span class="line">But because God is merciful.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">And in that mercy, everything changes:</span><span class="line">The axe is no longer just an object.</span><span class="line">It becomes a symbol of restoration.</span><span class="line">Of faithfulness returned. Of stewardship renewed.</span></div>
+    <div class="stanza"><span class="line">You stand at the river's edge,</span><span class="line">hands trembling, heart broken, soul exposed.</span><span class="line">And yet— iron rises. Presence returns. Faithfulness blooms again.</span></div>
+    <hr class="prose-rule">
+    <div class="stanza"><span class="line">The cry that broke you—</span><span class="line">"Alas, master! It was borrowed!"—</span><span class="line">becomes the very thing that opens the door to mercy.</span></div>
+    <div class="stanza"><span class="line">No effort can restore what was lost.</span><span class="line">No reputation can bring it back.</span><span class="line">No plan can lift it from the river bottom.</span><span class="line">Only mercy.</span></div>
+    <div class="pull-quote">Everything we hold was borrowed.<br>Everything can be returned to us— not by striving, but by God alone.</div>
+    <div class="stanza"><span class="line">Let this be your posture:</span><span class="line">Tremble at what is sacred. Guard what is entrusted.</span><span class="line">Wail honestly when you fail. And receive mercy when it comes.</span></div>
+    <div class="stanza"><span class="line">For the river has done its work.</span><span class="line">The axe has sunk. And the tree has already entered the water.</span></div>
+    <div class="pull-quote">Alas, master. It was borrowed.<br><em>And by God's mercy, it rises again.</em></div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="chapter" id="closing">
+    <span class="chapter-label">✦ Closing</span>
+    <h2 class="chapter-title">A Word on Stewardship</h2>
+    <div class="closing-grid">
+      <div class="closing-card">
+        <div class="closing-card-title">Tremble at What Is Sacred</div>
+        <div class="closing-card-body">Handle what is entrusted with holy fear. The weight you carry is not yours to own.</div>
+      </div>
+      <div class="closing-card">
+        <div class="closing-card-title">Guard What Is Entrusted</div>
+        <div class="closing-card-body">Vigilance is not optional. The slip begins in the moment you stop fearing the loss.</div>
+      </div>
+      <div class="closing-card">
+        <div class="closing-card-title">Wail Honestly When You Fail</div>
+        <div class="closing-card-body">The cry that is finally honest — <em>"It was borrowed"</em> — is the cry that opens the door to mercy.</div>
+      </div>
+      <div class="closing-card">
+        <div class="closing-card-title">Receive Mercy When It Comes</div>
+        <div class="closing-card-body">Iron rises not by effort, not by pride, not by pretense. But by God alone.</div>
+      </div>
+    </div>
+    <div class="closing-final">Alas, master. It was borrowed. And by God's mercy, it rises again.</div>
+    <div class="closing-sig">The Folio &nbsp;·&nbsp; Book 01 of 12 &nbsp;·&nbsp; <a href="mailto:jaceylang16@outlook.com">jaceylang16@outlook.com</a></div>
+  </div>
+
+  <!-- SERMON -->
+  <div class="chapter" id="sermon">
+    <span class="chapter-label">❧ Sermon</span>
+    <h2 class="chapter-title">Funds Held in Trust</h2>
+    <div class="sermon-panel">
+      <div class="sermon-label">Key Verse — 2 Kings 6:5</div>
+      <div class="sermon-body">
+        <p>Mark ye well! Do ye ken what it is to hold that which is not thine? To clutch it tight, yet know it may vanish in a heartbeat?</p>
+        <p>The sons of the prophets huddled in their narrow rooms. Walls too close. Work too great. They went down to the Jordan, axes in hand, borrowed from one another. Not their own. Men of God, aye— but novices with iron. Hands made for prayer, not timber.</p>
+        <p>And then— it came to pass. The axe head slipped. It sank.</p>
+        <p>By my troth! The river brooks no dalliance. It swallowed it whole. No hand could reach it. No mortal wit could save it.</p>
+        <p>Shock. Shame. Helplessness. Heart hammering. Throat tight. Fain would one flee, but the bank gives no purchase.</p>
+        <p class="sermon-cry">And the cry tore from the man's soul:</p>
+        <p class="sermon-cry">"Alas, Master! For it was borrowed!"</p>
+        <p>Not <em>I lost it.</em> Not <em>It fell by chance.</em> But naked despair. Helplessness laid bare. Truth stripped before the Almighty.</p>
+        <p>Elisha demanded: "Where fell it?" The man pointed. No hiding. No pretense. God's mercy, or a pox upon pretense!</p>
+        <p>The prophet cast a stick. The iron rose. Not by skill. Not by mortal cunning. By mercy alone.</p>
+        <p>Steward! Mark me well!</p>
+        <p>All that thou holdest— capital, trust, influence— is borrowed. It is lent, not thine to keep. God discerned a spark of faithfulness. Not because of cleverness. Not because of worth.</p>
+        <p>The Jordan shall rise against thee. Suddenly. Silently. And thou shalt quake as if the river were thy judge.</p>
+        <p>Thy first act? Not defence. Not explanation. Not concealment.</p>
+        <p class="sermon-cry">"Alas, Master! It was borrowed!"</p>
+        <p>Confess fully. Point to the precise place of failure. Tremble. Shiver. Receive mercy, if it be granted, like a lifeline flung across the roaring flood.</p>
+        <p>Take it up again— Trembling. Aware. Reverent.</p>
+        <p>Thou art not master. Thou art steward. The river observes. The Master gazes. The pew trembles with thee.</p>
+        <p>Will ye answer honestly? Or cling to pride as the Jordan swallows thy testimony?</p>
+        <p>Every glance thou thought unseen. Every whisper imagined hidden. All observed. All accounted.</p>
+        <p>Deceive thyself no longer. The axe was borrowed. Thy stewardship is lent. And the Master shall call for account.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANTHEM -->
+  <div class="chapter" id="anthem">
+    <span class="chapter-label">♩ Anthem</span>
+    <h2 class="chapter-title">The Song of Stewardship — Eleven Verses</h2>
+    <div class="hymn-wrap">
+      <p class="hymn-desc">On the quiet weight of Christian financial stewardship — holding what is entrusted, absorbing risk without complaint, in the light of 2 Kings 6.</p>
+      <div class="hymn-body">
+        <span class="hymn-verse"><span class="hymn-line">Alas, my master! 'twas but lent,</span><span class="hymn-line">The prophet's servant cried;</span><span class="hymn-line">So every sum we hold on earth</span><span class="hymn-line">Is borrowed, not our pride.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">Entrusted capital we keep,</span><span class="hymn-line">Not ours to grasp or claim;</span><span class="hymn-line">A weighty charge upon the hand,</span><span class="hymn-line">A stewardship of name.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">We guard it with unslacken'd care,</span><span class="hymn-line">We mark it in the book;</span><span class="hymn-line">Each movement weigh'd with prudent fear,</span><span class="hymn-line">Nor leave one farthing shook.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">Not swift increase, nor seasons kept</span><span class="hymn-line">By promise bold or fair;</span><span class="hymn-line">But conscience clear before our God,</span><span class="hymn-line">And faithful, utmost care.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">The principal will pass away,</span><span class="hymn-line">The road hath turns and night;</span><span class="hymn-line">Yet man is never undone here</span><span class="hymn-line">By fortune's changing light,</span></span>
+        <span class="hymn-verse"><span class="hymn-line">But by the trust he fails to keep,</span><span class="hymn-line">By slack or faithless hand;</span><span class="hymn-line">A charge of honour calls us all</span><span class="hymn-line">Before the Judge to stand.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">No glittering show, no empty boast,</span><span class="hymn-line">No dazzling words we give;</span><span class="hymn-line">But steady prudence, word kept true,</span><span class="hymn-line">And hearts that purely live.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">If this seem slow, or wanting show,</span><span class="hymn-line">And tries the waiting mind,</span><span class="hymn-line">There are who deal in brighter arts—</span><span class="hymn-line">Let such go to their kind.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">For soon the sum and fund depart,</span><span class="hymn-line">Like tools for one brief day;</span><span class="hymn-line">But faithfulness and holy care</span><span class="hymn-line">Shall never fade away.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">All that is lent remains but lent,</span><span class="hymn-line">And still that word abides;</span><span class="hymn-line">No gain can ease the borrower's heart,</span><span class="hymn-line">No reckon'd sum decides.</span></span>
+        <span class="hymn-verse"><span class="hymn-line">Though mercy meet us by the stream,</span><span class="hymn-line">And loss be stay'd awhile,</span><span class="hymn-line">The cry returns— it was but lent—</span><span class="hymn-line">And stills the soul from guile.</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER NAV -->
+  <div class="chapter-nav">
+    <a href="folio-index.html">← All Books</a>
+    <a href="#top">↑ Top</a>
+    <a href="book-02.html">Book 02 →</a>
+  </div>
+
+</div><!-- /book-content -->
+
+<!-- FLOATING TOP -->
+<div class="fab" id="fab">
+  <a href="#top">↑ Top</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="book-footer">
+  <div class="book-footer-inner">
+    <a href="folio-index.html" class="footer-folio">The <span>Folio</span></a>
+    <span class="footer-note">Book 01 of 12 · Private Works</span>
+    <a href="index.html" class="footer-back">← All Books</a>
+  </div>
+</footer>
+
+<script>
+const fab = document.getElementById('fab');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) fab.classList.add('visible');
+  else fab.classList.remove('visible');
+});
+</script>
+
+</body>
+</html>
