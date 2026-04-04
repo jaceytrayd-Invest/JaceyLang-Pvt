@@ -20,7 +20,7 @@
   --paper-dark: #d4ccbc;
   --text:       #2a2520;
   --text-soft:  #5a5248;
-  --text-dim:   #8a8278;
+  --text-dim:   #4a4440;
   --red:        #8b2020;
   --red-soft:   #a83030;
   --red-dim:    #5a1515;
@@ -93,6 +93,69 @@ body {
   color: var(--text-dim);
   letter-spacing: 0.04em;
 }
+
+/* ═══════════════════════════════════════
+   JACEYLANG BAND
+═══════════════════════════════════════ */
+.jl-band {
+  background: var(--ink-soft);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 2.8rem 0 3rem;
+}
+
+.jl-band-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.4rem;
+  align-items: start;
+}
+
+@media (max-width: 560px) {
+  .jl-band-inner { grid-template-columns: 1fr; }
+  .jl-logo-wrap { display: flex; align-items: center; gap: 1rem; }
+}
+
+.jl-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  flex-shrink: 0;
+}
+
+.jl-name {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.jl-text {}
+
+.jl-heading {
+  font-family: var(--serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--red-soft);
+  margin-bottom: 0.9rem;
+  display: block;
+}
+
+.jl-desc {
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #c0b8a8;
+}
+
+.jl-desc p { margin-bottom: 0.9rem; }
+.jl-desc p:last-child { margin-bottom: 0; }
 
 /* ═══════════════════════════════════════
    INTRO BAND
@@ -319,6 +382,36 @@ body {
   </div>
 </header>
 
+<!-- JACEYLANG BAND -->
+<div class="jl-band">
+  <div class="jl-band-inner">
+
+    <div class="jl-logo-wrap">
+      <!-- Nib mark -->
+      <svg width="44" height="68" viewBox="0 0 52 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M26 6L46 34L26 90L6 34Z" stroke="#c8c0b0" stroke-width="1.3" stroke-linejoin="round"/>
+        <line x1="26" y1="42" x2="26" y2="90" stroke="#c8c0b0" stroke-width="0.9"/>
+        <circle cx="26" cy="38" r="3.5" fill="#8b2020"/>
+        <line x1="14" y1="50" x2="26" y2="90" stroke="#c8c0b0" stroke-width="0.7"/>
+        <line x1="38" y1="50" x2="26" y2="90" stroke="#c8c0b0" stroke-width="0.7"/>
+        <line x1="6" y1="34" x2="26" y2="42" stroke="#c8c0b0" stroke-width="0.9"/>
+        <line x1="46" y1="34" x2="26" y2="42" stroke="#c8c0b0" stroke-width="0.9"/>
+      </svg>
+      <span class="jl-name">JaceyLang</span>
+    </div>
+
+    <div class="jl-text">
+      <span class="jl-heading">About the Author</span>
+      <div class="jl-desc">
+        <p>JaceyLang is the private writing practice of John Christopher — a space where commissioned work is produced with the same discipline applied to language that a craftsman applies to material. Every engagement is discrete, purposeful, and held to a standard that does not negotiate with haste.</p>
+        <p>The works housed in this collection were produced for specific clients, on specific briefs, with the understanding that precision in language is not ornament — it is function. What you read here was written to carry weight, not merely to fill a page.</p>
+        <p>These are not drafts. They are not samples. They are delivered works, shared only with those for whom they were made.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="intro-band">
   <p>Each book in this collection is a commissioned private work. Select a title to read.</p>
 </div>
@@ -333,11 +426,11 @@ body {
   <ul class="book-list">
 
     <li class="book-item">
-      <a href="folio-book1.html" class="book-link">
+     <a href="folio-book1.html" class="book-link">
         <span class="book-num">01</span>
         <div class="book-body">
           <span class="book-title">Alas, Master — For It Is Borrowed</span>
-          <span class="book-meta">Prophetic series · 16 chapters · Stewardship &amp; 2 Kings 6</span>
+          <span class="book-meta">Funds Held in Trust</span>
         </div>
         <span class="book-status">Published</span>
         <span class="book-arrow">→</span>
