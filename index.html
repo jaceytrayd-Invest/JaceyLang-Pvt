@@ -3,351 +3,559 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JaceyLang — Where Words Are Earned, Not Merely Written</title>
+<title>The Folio — Private Works by John Christopher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ═══════════════════════════════════════
+   ROOT
+═══════════════════════════════════════ */
 :root {
-  --bg:        #0a0a0a;
-  --bg-raised: #111111;
-  --bg-card:   #181818;
-  --white:     #f0ede8;
-  --white-soft:#b8b2aa;
-  --white-dim: #6e6860;
-  --rule:      #2a2825;
-  --gold:      #c9a96e;
-  --gold-dim:  #8a6f3e;
-  --gold-bg:   #1a1610;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --body:  'Libre Baskerville', Georgia, serif;
+  --ink:        #16130f;
+  --ink-soft:   #1e1b16;
+  --ink-mid:    #252018;
+  --paper:      #f5f0e8;
+  --paper-dim:  #e8e2d6;
+  --paper-dark: #d4ccbc;
+  --text:       #2a2520;
+  --text-soft:  #5a5248;
+  --text-dim:   #4a4440;
+  --red:        #8b2020;
+  --red-soft:   #a83030;
+  --red-dim:    #5a1515;
+  --red-faint:  #f2eaea;
+  --gold:       #b89a60;
+  --gold-dim:   #8a7248;
+  --rule:       #8a8070;
+  --rule-light: rgba(138,128,112,0.35);
+  --serif:      'Playfair Display', Georgia, serif;
+  --body:       'Crimson Pro', Georgia, serif;
 }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--white); font-family: var(--body); font-size: 17px; line-height: 1.85; }
 
-/* ── MASTHEAD ── */
-.masthead { border-bottom: 1px solid var(--rule); padding: 2.5rem 0 1.8rem; background: var(--bg); }
-.masthead-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: flex-end; gap: 2rem; }
-.brand-name { font-family: var(--serif); font-size: 3rem; font-weight: 600; letter-spacing: 0.12em; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
-.brand-tagline { font-family: var(--serif); font-size: 1rem; font-weight: 300; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
 
-/* ── BRAND STRIP ── */
-.brand-strip { border-bottom: 1px solid var(--rule); background: var(--bg-raised); }
-.brand-strip-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 1fr 1fr; }
-.brand-cell { padding: 1.2rem 1.4rem; border-right: 1px solid var(--rule); background: transparent; border-top: 3px solid transparent; }
-.brand-cell:first-child { padding-left: 0; }
-.brand-cell:last-child { border-right: none; }
-.brand-cell.active { background: var(--gold-bg); border-top-color: var(--gold); }
-.brand-cell-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.06em; color: var(--white-dim); margin-bottom: 0.25rem; }
-.brand-cell.active .brand-cell-name { color: var(--gold); font-size: 1.1rem; }
-.brand-cell-desc { font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--white-dim); line-height: 1.4; }
-.brand-cell.active .brand-cell-desc { color: var(--white-soft); }
-.brand-strip-note { max-width: 900px; margin: 0 auto; padding: 0.7rem 2rem; font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--white-soft); border-top: 1px solid var(--rule); background: var(--bg); }
-
-/* ── SITE NAV ── */
-.site-nav { border-bottom: 1px solid var(--rule); background: var(--bg); }
-.site-nav-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: flex; }
-.nav-link { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-dim); text-decoration: none; padding: 0.9rem 0; margin-right: 2rem; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
-.nav-link:hover { color: var(--white); }
-.nav-link.active { color: var(--gold); border-bottom-color: var(--gold); }
-
-/* ── SHARED CONTENT WRAPPER ── */
-.content { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-
-/* ── HERO ── */
-.hero { padding: 5rem 0 4rem; display: grid; grid-template-columns: 3fr 1fr; gap: 5rem; align-items: start; border-bottom: 1px solid var(--rule); }
-.hero-eyebrow { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-.hero-heading { font-family: var(--serif); font-size: 2.6rem; font-weight: 600; line-height: 1.15; color: var(--white); margin-bottom: 0.6rem; }
-.hero-subheading { font-family: var(--serif); font-size: 1.1rem; font-style: italic; font-weight: 300; color: var(--gold); margin-bottom: 2rem; }
-.hero-body { font-family: var(--body); font-size: 1rem; line-height: 1.95; color: var(--white-soft); }
-.hero-nib { display: flex; align-items: flex-start; justify-content: center; padding-top: 1.5rem; opacity: 0.25; }
-
-/* ── SECTIONS ── */
-.page-section { padding: 3.5rem 0; border-bottom: 1px solid var(--rule); }
-.page-section:last-of-type { border-bottom: none; }
-.section-label { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
-.section-heading { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; color: var(--white); margin-bottom: 1.6rem; line-height: 1.2; }
-.section-body { font-family: var(--body); font-size: 1rem; line-height: 1.95; color: var(--white-soft); margin-bottom: 1rem; }
-.section-body:last-child { margin-bottom: 0; }
-.section-body strong { color: var(--white); font-weight: 700; }
-
-/* TWO-COL LAYOUT */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-
-/* SERVICE LIST */
-.service-list { list-style: none; margin-top: 0.5rem; }
-.service-list li { font-family: var(--body); font-size: 1rem; line-height: 1.75; color: var(--white-soft); padding: 0.8rem 0; border-bottom: 1px solid var(--rule); display: flex; gap: 0.9rem; align-items: baseline; }
-.service-list li:last-child { border-bottom: none; }
-.service-list li::before { content: '—'; color: var(--gold); font-family: var(--serif); flex-shrink: 0; }
-
-/* PRINCIPLE CARDS */
-.principles { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
-.principle-card { background: var(--bg-card); border-top: 2px solid var(--gold); padding: 1.4rem 1.6rem; }
-.principle-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--white); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-.principle-desc { font-family: var(--body); font-size: 1rem; font-style: italic; color: var(--white-soft); line-height: 1.7; }
-
-/* HIRING ROLES */
-.role-block { margin-bottom: 2rem; }
-.role-block:last-child { margin-bottom: 0; }
-.role-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--gold); margin-bottom: 0.35rem; }
-.role-desc { font-family: var(--body); font-size: 1rem; line-height: 1.85; color: var(--white-soft); }
-
-/* CONTACT BLOCK */
-.contact-block { background: var(--bg-card); border-left: 3px solid var(--gold); padding: 1.6rem 2rem; margin-top: 1.5rem; }
-.contact-label { font-family: var(--serif); font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white-dim); margin-bottom: 0.5rem; }
-.contact-email { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--gold); text-decoration: none; letter-spacing: 0.03em; }
-.contact-email:hover { color: var(--white); }
-.contact-note { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--white-soft); margin-top: 0.5rem; }
-
-/* CLOSING BANNER */
-.closing-banner { background: var(--gold-bg); border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim); padding: 3.5rem 0; }
-.closing-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-.closing-text { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; font-style: italic; line-height: 1.6; color: var(--white-soft); }
-.closing-text strong { font-weight: 600; font-style: normal; color: var(--gold); }
-
-/* TOPICS */
-.topics-section { padding: 3.5rem 0 1rem; }
-.topics-label { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-.topics-list { list-style: none; }
-.topic-item { border-top: 1px solid var(--rule); }
-.topic-item:last-child { border-bottom: 1px solid var(--rule); }
-.topic-link { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: baseline; gap: 1rem; padding: 1.3rem 0; text-decoration: none; color: inherit; }
-.topic-link:hover .topic-title { color: var(--gold); }
-.topic-num { font-family: var(--serif); font-size: 0.95rem; color: var(--white-dim); letter-spacing: 0.1em; }
-.topic-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--white); transition: color 0.2s; }
-.topic-meta { font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--white-dim); text-align: right; }
-
-/* FOOTER */
-.footer { border-top: 1px solid var(--rule); padding: 2rem 0; background: var(--bg); }
-.footer-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-.footer-brand { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.12em; color: var(--white-soft); }
-.footer-note { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--white-soft); }
-
-@media (max-width: 660px) {
-  .hero { grid-template-columns: 1fr; gap: 2rem; }
-  .hero-nib { display: none; }
-  .brand-strip-inner { grid-template-columns: 1fr; }
-  .brand-cell { border-right: none; border-bottom: 1px solid var(--rule); border-top: none !important; }
-  .brand-cell.active { border-left: 3px solid var(--gold); }
-  .two-col { grid-template-columns: 1fr; gap: 1.5rem; }
-  .principles { grid-template-columns: 1fr; }
-  .topic-link { grid-template-columns: 2rem 1fr; }
-  .topic-meta { display: none; }
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 400;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.folio-header {
+  background: var(--ink);
+  padding: 3.4rem 0 2.6rem;
+  border-bottom: 3px solid var(--gold);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle texture lines */
+.folio-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 48px
+  );
+  pointer-events: none;
+}
+
+.folio-header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.folio-eyebrow {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.folio-name {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 700;
+  color: var(--paper-dim);
+  letter-spacing: 0.06em;
+  line-height: 1.08;
+  margin-bottom: 0.6rem;
+}
+
+.folio-name em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.folio-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-dim);
+  margin: 1rem auto;
+  opacity: 0.6;
+}
+
+.folio-tagline {
+  font-family: var(--body);
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--paper-dark);
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════
+   PRACTICE BAND
+═══════════════════════════════════════ */
+.jl-band {
+  background: var(--ink-soft);
+  border-bottom: 1px solid rgba(184,154,96,0.12);
+  padding: 3rem 0 3.4rem;
+}
+
+.jl-band-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.8rem;
+  align-items: start;
+}
+
+@media (max-width: 560px) {
+  .jl-band-inner { grid-template-columns: 1fr; }
+  .jl-logo-wrap  { flex-direction: row; align-items: center; gap: 1rem; }
+}
+
+.jl-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+}
+
+.jl-name {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--paper-dark);
+}
+
+.jl-heading {
+  font-family: var(--body);
+  font-size: 0.66rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.jl-desc {
+  font-family: var(--body);
+  font-size: 1.02rem;
+  line-height: 1.88;
+  color: #bdb5a4;
+}
+
+.jl-desc p { margin-bottom: 0.9rem; }
+.jl-desc p:last-child { margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   COLLECTION LABEL BAND
+═══════════════════════════════════════ */
+.intro-band {
+  background: var(--ink-mid);
+  border-bottom: 1px solid rgba(184,154,96,0.08);
+  padding: 1.2rem 0;
+  text-align: center;
+}
+
+.intro-band p {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--paper-dark);
+  letter-spacing: 0.06em;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ═══════════════════════════════════════
+   LIBRARY
+═══════════════════════════════════════ */
+.library {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3.6rem 2rem 6rem;
+}
+
+.library-label {
+  font-family: var(--body);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2.2rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.library-count {
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--text-soft);
+}
+
+/* ═══════════════════════════════════════
+   BOOK ROWS
+═══════════════════════════════════════ */
+.book-list { list-style: none; }
+
+.book-item {
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fadeUp 0.45s ease forwards;
+}
+
+.book-item:first-child { border-top: 1px solid var(--rule); }
+
+.book-item:nth-child(1) { animation-delay: 0.06s; }
+.book-item:nth-child(2) { animation-delay: 0.14s; }
+.book-item:nth-child(3) { animation-delay: 0.22s; }
+
+/* Published book link */
+.book-link {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem 0.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.18s;
+}
+
+.book-link:hover { background: var(--red-faint); }
+.book-link:hover .book-title { color: var(--red); }
+.book-link:hover .book-arrow { color: var(--red); transform: translateX(4px); }
+
+/* Pending row — not a link */
+.book-row-pending {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.35rem 0.4rem;
+  cursor: default;
+  user-select: none;
+}
+
+.book-num {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--red-dim);
+  text-align: right;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.book-item.pending .book-num {
+  color: var(--rule);
+}
+
+.book-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.book-title {
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.18s;
+  line-height: 1.3;
+}
+
+.book-item.pending .book-title {
+  color: var(--rule);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.book-meta {
+  font-family: var(--body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.book-status {
+  font-family: var(--body);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid var(--red-dim);
+  color: var(--red-soft);
+  background: var(--red-faint);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.book-item.pending .book-status {
+  border-color: rgba(138,128,112,0.3);
+  color: var(--rule);
+  background: transparent;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+}
+
+.book-arrow {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  transition: color 0.18s, transform 0.18s;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.folio-footer {
+  background: var(--ink);
+  border-top: 3px solid var(--gold);
+  padding: 2.2rem 0;
+}
+
+.folio-footer-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.12em;
+}
+
+.footer-note {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--paper-dark);
+}
+
+.footer-contact {
+  font-family: var(--body);
+  font-size: 0.86rem;
+  color: var(--paper-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-contact:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════
+   ANIMATION
+═══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .book-link { grid-template-columns: 2.2rem 1fr; gap: 1rem; }
+  .book-status { display: none; }
+  .book-arrow  { display: none; }
+  .book-row-pending { grid-template-columns: 2.2rem 1fr; }
+  .book-item.pending .book-status { display: none; }
+}
+
 </style>
 </head>
 <body>
 
-<!-- MASTHEAD -->
-<header class="masthead">
-  <div class="masthead-inner">
-    <svg width="48" height="74" viewBox="0 0 52 96" fill="none">
-      <path d="M26 6L46 34L26 90L6 34Z" stroke="#f0ede8" stroke-width="1.4" stroke-linejoin="round"/>
-      <line x1="26" y1="42" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.9"/>
-      <circle cx="26" cy="38" r="3" fill="#f0ede8"/>
-      <line x1="14" y1="50" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.7"/>
-      <line x1="38" y1="50" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.7"/>
-      <line x1="6" y1="34" x2="26" y2="42" stroke="#f0ede8" stroke-width="0.9"/>
-      <line x1="46" y1="34" x2="26" y2="42" stroke="#f0ede8" stroke-width="0.9"/>
-    </svg>
-    <div>
-      <div class="brand-name">JACEYLANG</div>
-      <div class="brand-tagline">Language &nbsp;·&nbsp; Literature &nbsp;·&nbsp; Writing</div>
-    </div>
+<!-- HEADER -->
+<header class="folio-header" id="top">
+  <div class="folio-header-inner">
+    <span class="folio-eyebrow">John Christopher &middot; Works in Commission</span>
+    <h1 class="folio-name">The <em>Folio</em></h1>
+    <div class="folio-rule"></div>
+    <p class="folio-tagline">A library of works produced under private commission</p>
   </div>
 </header>
 
-<!-- BRAND STRIP -->
-<div class="brand-strip">
-  <div class="brand-strip-inner">
-    <div class="brand-cell">
-      <div class="brand-cell-name">JaceyTrayd</div>
-      <div class="brand-cell-desc">Private credit capital reporting</div>
-    </div>
-    <div class="brand-cell active">
-      <div class="brand-cell-name">JaceyLang</div>
-      <div class="brand-cell-desc">Language, literature &amp; report writing</div>
-    </div>
-    <div class="brand-cell">
-      <div class="brand-cell-name">Ask Jacey</div>
-      <div class="brand-cell-desc">Personal finance Q&amp;A &amp; IB training</div>
-    </div>
-  </div>
-  <div class="brand-strip-note">Three brands under John Christopher. One name. Nothing crosses.</div>
-</div>
+<!-- PRACTICE BAND -->
+<div class="jl-band">
+  <div class="jl-band-inner">
 
-<!-- NAV -->
-<nav class="site-nav">
-  <div class="site-nav-inner">
-    <a href="#about"    class="nav-link active">About</a>
-    <a href="#services" class="nav-link">Services</a>
-    <a href="#approach" class="nav-link">Approach</a>
-    <a href="#hiring"   class="nav-link">Hiring</a>
-    <a href="#topics"   class="nav-link">Projects</a>
-    <a href="#contact"  class="nav-link">Contact</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="content" id="about">
-  <div class="hero">
-    <div>
-      <div class="hero-eyebrow">John Christopher</div>
-      <h1 class="hero-heading">Where words are earned,<br>not merely written.</h1>
-      <p class="hero-subheading">JaceyLang — language, literature, and the discipline of written expression.</p>
-      <p class="hero-body">In an age of haste and superficiality, JaceyLang insists upon deliberation. Words are not casual — they are crafted with attention to rhythm, cadence, and nuance. Every sentence is measured, every phrase shaped, every argument given its proper weight.</p>
-    </div>
-    <div class="hero-nib">
-      <svg width="80" height="122" viewBox="0 0 52 96" fill="none">
-        <path d="M26 6L46 34L26 90L6 34Z" stroke="#f0ede8" stroke-width="1.2" stroke-linejoin="round"/>
-        <line x1="26" y1="42" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.8"/>
-        <circle cx="26" cy="38" r="3" fill="#9a7c3f"/>
-        <line x1="14" y1="50" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.6"/>
-        <line x1="38" y1="50" x2="26" y2="90" stroke="#f0ede8" stroke-width="0.6"/>
-        <line x1="6" y1="34" x2="26" y2="42" stroke="#f0ede8" stroke-width="0.8"/>
-        <line x1="46" y1="34" x2="26" y2="42" stroke="#f0ede8" stroke-width="0.8"/>
+    <div class="jl-logo-wrap">
+      <svg width="44" height="68" viewBox="0 0 52 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M26 6L46 34L26 90L6 34Z" stroke="#b89a60" stroke-width="1.2" stroke-linejoin="round"/>
+        <line x1="26" y1="42" x2="26" y2="90" stroke="#b89a60" stroke-width="0.9"/>
+        <circle cx="26" cy="38" r="3.5" fill="#8b2020"/>
+        <line x1="14" y1="50" x2="26" y2="90" stroke="#b89a60" stroke-width="0.65"/>
+        <line x1="38" y1="50" x2="26" y2="90" stroke="#b89a60" stroke-width="0.65"/>
+        <line x1="6"  y1="34" x2="26" y2="42" stroke="#b89a60" stroke-width="0.9"/>
+        <line x1="46" y1="34" x2="26" y2="42" stroke="#b89a60" stroke-width="0.9"/>
       </svg>
+      <span class="jl-name">JaceyLang</span>
     </div>
-  </div>
-</div>
 
-<!-- SERVICES -->
-<div class="content" id="services">
-  <div class="page-section">
-    <div class="section-label">What We Do</div>
-    <h2 class="section-heading">Services</h2>
-    <div class="two-col">
-      <div>
-        <p class="section-body">The work spans composition, structure, and expression — wherever precision in language is the standard, not an afterthought.</p>
-        <p class="section-body">Each engagement is tailored to ensure that the final output is not only correct but <strong>composed</strong> — aligned with its purpose and audience.</p>
-      </div>
-      <ul class="service-list">
-        <li>Writing, rewriting, and structured composition</li>
-        <li>Editing and stylistic refinement</li>
-        <li>Report preparation and formal documentation</li>
-        <li>Presentation development and communication design</li>
-        <li>Training support, including train-the-trainer guidance</li>
-        <li>Language clarity for professional, academic, and corporate contexts</li>
-        <li>Exploratory work in literary devices, narrative rhythm, and expressive depth</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- APPROACH -->
-<div class="content" id="approach">
-  <div class="page-section">
-    <div class="section-label">How We Work</div>
-    <h2 class="section-heading">Approach</h2>
-    <p class="section-body">JaceyLang treats language as both craft and discipline. Nothing is rushed. Nothing is incidental. The aim is not merely to improve writing — but to strengthen communication, so that ideas carry weight, direction, and meaning.</p>
-    <div class="principles">
-      <div class="principle-card">
-        <div class="principle-title">Precision in language</div>
-        <div class="principle-desc">Every word chosen with care for what it carries and what it excludes.</div>
-      </div>
-      <div class="principle-card">
-        <div class="principle-title">Clarity in structure</div>
-        <div class="principle-desc">Arguments built to move, not merely to fill the space between margins.</div>
-      </div>
-      <div class="principle-card">
-        <div class="principle-title">Awareness of audience</div>
-        <div class="principle-desc">Communication that knows who it is speaking to, and speaks accordingly.</div>
-      </div>
-      <div class="principle-card">
-        <div class="principle-title">Respect for intent</div>
-        <div class="principle-desc">The writer's voice preserved, sharpened — never replaced by someone else's.</div>
+    <div class="jl-text">
+      <span class="jl-heading">About the Author</span>
+      <div class="jl-desc">
+        <p>JaceyLang is the public-facing practice of John Christopher. The folio to which access has been granted comprises commissioned works undertaken under private engagement.</p>
+        <p>Each piece proceeds from a defined brief, and from the understanding that language is not ornament, but function. Precision is assumed; haste finds no place here.</p>
+        <p>These are neither drafts nor speculative samples. They are delivered works — considered, resolved, and shared in discretion, to be read in that same spirit.</p>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- ENGAGEMENT MODEL -->
-<div class="content">
-  <div class="page-section">
-    <div class="section-label">How to Engage</div>
-    <h2 class="section-heading">Engagement Model</h2>
-    <div class="two-col">
-      <div>
-        <p class="section-body"><strong>Institutional</strong><br>As a representative of institutions with which John Christopher is empanelled.</p>
+<div class="intro-band">
+  <p>Each volume in this library represents a work produced under private commission. Those with access may select a title to read.</p>
+</div>
+
+<!-- LIBRARY -->
+<div class="library">
+  <div class="library-label">
+    <span>The Collection</span>
+    <span class="library-count">6 Works Published</span>
+  </div>
+
+  <ul class="book-list">
+
+    <!-- Published -->
+    <li class="book-item">
+      <a href="book-01.html" class="book-link">
+        <span class="book-num">01</span>
+        <div class="book-body">
+          <span class="book-title">Alas, Master — For It Is Borrowed</span>
+          <span class="book-meta">Funds Held in Trust</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-02.html" class="book-link">
+        <span class="book-num">02</span>
+        <div class="book-body">
+          <span class="book-title">All Asia Turned Away</span>
+          <span class="book-meta">&hellip;and the Soul Found It in God&hellip;</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-03.html" class="book-link">
+        <span class="book-num">03</span>
+        <div class="book-body">
+          <span class="book-title">According to the Vessels</span>
+          <span class="book-meta">On capacity, limitation, and the restraint of grace</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-04.html" class="book-link">
+        <span class="book-num">04</span>
+        <div class="book-body">
+          <span class="book-title">That Which Was Not His</span>
+          <span class="book-meta">On stewardship, restraint, and increase under another&rsquo;s hand</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-05.html" class="book-link">
+        <span class="book-num">05</span>
+        <div class="book-body">
+          <span class="book-title">Notwithstanding the Lord Stood</span>
+          <span class="book-meta">On divine reckoning amidst abandonment and silence</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-06.html" class="book-link">
+        <span class="book-num">06</span>
+        <div class="book-body">
+          <span class="book-title">Before the Lord He Stood</span>
+          <span class="book-meta">On defilement, accusation, and the imputed restoration of God</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <!-- Pending — no link, no arrow -->
+    <li class="book-item pending">
+      <div class="book-row-pending">
+        <span class="book-num">07&ndash;12</span>
+        <div class="book-body">
+          <span class="book-title">Further volumes in preparation</span>
+        </div>
+        <span class="book-status">Forthcoming</span>
       </div>
-      <div>
-        <p class="section-body"><strong>Independent</strong><br>As an independent professional through direct freelance engagements.</p>
-      </div>
-    </div>
-    <p class="section-body" style="margin-top:1.2rem">Both are conducted with the same standard of care, discretion, and professionalism.</p>
-  </div>
+    </li>
+
+  </ul>
 </div>
 
-<!-- WHO THIS IS FOR -->
-<div class="content">
-  <div class="page-section">
-    <div class="section-label">Audience</div>
-    <h2 class="section-heading">Who This Is For</h2>
-    <p class="section-body">Whenever language must be clear, credible, and considered — this is where the work belongs.</p>
-    <ul class="service-list" style="margin-top:1rem">
-      <li>Professionals and consultants preparing communication of consequence</li>
-      <li>Teams and organisations who demand that every word resonate with authority</li>
-      <li>Writers and independent thinkers working at the edge of their expression</li>
-      <li>Individuals facing high-stakes documents — reports, submissions, correspondence</li>
-    </ul>
-  </div>
-</div>
-
-<div class="content" id="topics">
-  <div class="topics-section">
-    <div class="topics-label">Client Work (Private)</div>
-    <ul class="topics-list">
-      <li class="topic-item">
-        <a href="subsite/index.html" class="topic-link">
-          <span class="topic-num">01</span>
-          <span class="topic-title">Private Content</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<!-- HIRING -->
-<div class="content" id="hiring">
-  <div class="page-section">
-    <div class="section-label">Careers</div>
-    <h2 class="section-heading">We're Hiring</h2>
-    <p class="section-body" style="margin-bottom:2rem">JaceyLang seeks individuals who share a conviction for precision, literary craft, and expressive clarity. Candidates should be meticulous, intellectually agile, and committed to elevating communication across professional and literary domains.</p>
-    <div class="role-block">
-      <div class="role-title">Writers &amp; Editors</div>
-      <div class="role-desc">Strong command of English, adept at both functional and literary expression.</div>
-    </div>
-    <div class="role-block">
-      <div class="role-title">Research &amp; Communication Analysts</div>
-      <div class="role-desc">Ability to distil complex ideas into structured, persuasive language.</div>
-    </div>
-    <div class="role-block">
-      <div class="role-title">Training &amp; Mentorship Associates</div>
-      <div class="role-desc">Experienced in guiding others to communicate with rigour and style.</div>
-    </div>
-    <div class="contact-block" style="margin-top:2rem">
-      <div class="contact-label">To Apply</div>
-      <a href="/cdn-cgi/l/email-protection#046e6567617d68656a633532446b7170686b6b6f2a676b69" class="contact-email"><span class="__cf_email__" data-cfemail="600a010305190c010e075156200f15140c0f0f0b4e030f0d">[email&#160;protected]</span></a>
-      <div class="contact-note">Submit CV and writing sample with subject line "JaceyLang Careers"</div>
-    </div>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<div class="content" id="contact">
-  <div class="page-section">
-    <div class="section-label">Get in Touch</div>
-    <h2 class="section-heading">Contact</h2>
-    <p class="section-body">Professional enquiries, collaborations, and advisory work may be directed to:</p>
-    <div class="contact-block">
-      <div class="contact-label">Email</div>
-      <a href="/cdn-cgi/l/email-protection#93f9f2f0f6eafff2fdf4a2a5d3fce6e7fffcfcf8bdf0fcfe" class="contact-email"><span class="__cf_email__" data-cfemail="dcb6bdbfb9a5b0bdb2bbedea9cb3a9a8b0b3b3b7f2bfb3b1">[email&#160;protected]</span></a>
-      <div class="contact-note">JaceyLang — Language, literature &amp; report writing</div>
-    </div>
-  </div>
-</div>
-
-<!-- CLOSING BANNER -->
-<div class="closing-banner">
-  <div class="closing-inner">
-    <p class="closing-text">Here, language is neither hurried nor incidental.<br>It is <strong>deliberate, precise, and alive</strong> — performing with clarity, weight, and literary care.
+<footer class="folio-footer">
+  <div class="folio-footer-inner">
+    <span class="footer-name">The Folio</span>
+    <span class="footer-note">Works in commission by John Christopher</span>
+    <a href="/cdn-cgi/l/email-protection#177d7674726e7b7679702621577862637b78787c3974787a" class="footer-contact"><span class="__cf_
