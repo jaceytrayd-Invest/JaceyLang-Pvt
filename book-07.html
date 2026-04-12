@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 07 — It May Be | The Folio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--base:18px;}
+[data-theme="night"]{--bg:#16130f;--bg-raised:#1e1b15;--bg-card:#242018;--bg-sidebar:#1a1714;--text:#e8e0d0;--text-soft:#b0a890;--text-dim:#6a6258;--rule:#2e2a22;--rule-acc:rgba(160,80,40,0.3);--accent:#c07840;--accent-dim:#7a4a20;--accent-bg:#2a1e10;--header-bg:rgba(22,19,15,0.97);--card-border:#2e2a22;--pull-color:#c07840;}
+[data-theme="day"]{--bg:#f5f0e8;--bg-raised:#ede8dc;--bg-card:#e8e2d4;--bg-sidebar:#ede8dc;--text:#2a2520;--text-soft:#5a5248;--text-dim:#9a9288;--rule:#ccc4b4;--rule-acc:rgba(139,32,32,0.2);--accent:#8b2020;--accent-dim:#5a1515;--accent-bg:#f0e8e8;--header-bg:rgba(245,240,232,0.97);--card-border:#ccc4b4;--pull-color:#8b2020;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:var(--base);scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-y:none;}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-weight:400;font-size:var(--base);line-height:1.9;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;transition:background 0.3s,color 0.3s;}
+.frozen-header{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--header-bg);border-bottom:1px solid var(--rule);backdrop-filter:blur(8px);display:flex;align-items:center;height:52px;padding:0 1.2rem;gap:1rem;transition:background 0.3s;}
+.frozen-home{font-family:'Playfair Display',Georgia,serif;font-size:calc(var(--base) * 0.95);font-weight:700;color:var(--text);text-decoration:none;letter-spacing:0.06em;white-space:nowrap;flex-shrink:0;transition:color 0.2s;}
+.frozen-home span{color:var(--accent);font-style:italic;font-weight:400;}
+.frozen-home:hover{color:var(--accent);}
+.frozen-sep{color:var(--rule);flex-shrink:0;}
+.frozen-chapter{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.82);letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.frozen-controls{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+.ctrl-btn{background:none;border:1px solid var(--rule);color:var(--text-dim);font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.82);padding:0.25rem 0.6rem;cursor:pointer;transition:color 0.2s,border-color 0.2s,background 0.2s;}
+.ctrl-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-bg);}
+.sidebar-toggle{background:none;border:1px solid var(--rule);color:var(--text-dim);padding:0.28rem 0.7rem;cursor:pointer;font-size:calc(var(--base) * 1.0);transition:color 0.2s,border-color 0.2s;}
+.sidebar-toggle:hover{color:var(--accent);border-color:var(--accent);}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:240px;background:var(--bg-sidebar);border-right:1px solid var(--rule);overflow-y:auto;z-index:150;transform:translateX(-100%);transition:transform 0.28s ease,background 0.3s;padding:1.2rem 0 2rem;}
+.sidebar.open{transform:translateX(0);}
+.sidebar-label{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.65);letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);padding:0 1.2rem 0.8rem;display:block;border-bottom:1px solid var(--rule);margin-bottom:0.5rem;}
+.sidebar-link{display:flex;align-items:baseline;gap:0.6rem;padding:0.4rem 1.2rem;text-decoration:none;font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.88);color:var(--text-dim);transition:color 0.15s,background 0.15s;border-left:2px solid transparent;}
+.sidebar-link:hover{color:var(--text);background:var(--bg-raised);}
+.sidebar-link.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-bg);}
+.sidebar-num{font-size:calc(var(--base) * 0.68);color:var(--accent-dim);min-width:1.8rem;flex-shrink:0;letter-spacing:0.06em;}
+.page-body{padding-top:52px;transition:margin-left 0.28s ease;}
+.page-body.shifted{margin-left:240px;}
+.book-hero{background:var(--bg-raised);border-bottom:3px solid var(--accent);padding:3.5rem 2rem 3rem;text-align:center;}
+.book-eyebrow{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.72);letter-spacing:0.36em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:1rem;}
+.book-title{font-family:'Playfair Display',Georgia,serif;font-size:calc(var(--base) * 2.4);font-weight:700;color:var(--text);line-height:1.15;margin-bottom:0.7rem;letter-spacing:-0.02em;}
+.book-verse{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:calc(var(--base) * 1.05);color:var(--text-soft);margin-bottom:1.3rem;letter-spacing:0.01em;}
+.book-intro{font-family:'Crimson Pro',Georgia,serif;font-style:italic;font-size:calc(var(--base) * 1.05);color:var(--text-soft);line-height:1.85;max-width:560px;margin:0 auto;}
+.book-content{max-width:820px;margin:0 auto;padding:0 2rem 6rem;}
+.chapter{padding:4.5rem 0 3.5rem;border-bottom:1px solid var(--rule);scroll-margin-top:68px;}
+.chapter:last-child{border-bottom:none;}
+.chapter-label{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.62);letter-spacing:0.42em;text-transform:uppercase;color:var(--accent-dim);display:block;margin-bottom:0.6rem;font-weight:700;}
+.chapter-title{font-family:'Playfair Display',Georgia,serif;font-size:calc(var(--base) * 1.75);font-weight:700;color:var(--text);line-height:1.18;margin-bottom:2.5rem;letter-spacing:-0.02em;padding-top:0.5rem;border-top:2px solid var(--accent);display:inline-block;width:100%;}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+@media(max-width:600px){.card-row{grid-template-columns:1fr;}}
+.card{background:var(--bg-card);border:1px solid var(--card-border);border-left:3px solid transparent;padding:1.8rem 2rem;font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 1.12);font-weight:400;line-height:2.05;color:var(--text);letter-spacing:0.015em;transition:border-color 0.2s;}
+.card:hover{border-left-color:var(--accent-dim);}
+.card .line{display:block;}
+.card.pull{border:none;border-left:5px solid var(--pull-color);background:var(--accent-bg);color:var(--pull-color);font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:calc(var(--base) * 1.28);font-weight:400;line-height:1.8;padding:1.8rem 2rem 1.8rem 1.8rem;letter-spacing:0.025em;}
+.chapter-nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 0 0;margin-top:1rem;border-top:1px solid var(--rule);flex-wrap:wrap;gap:1rem;}
+.chapter-nav a{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.9);color:var(--accent-dim);text-decoration:none;transition:color 0.2s;}
+.chapter-nav a:hover{color:var(--accent);}
+.fab{position:fixed;bottom:1.8rem;right:1.8rem;z-index:300;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.fab.visible{opacity:1;pointer-events:auto;}
+.fab a{display:block;padding:0.55rem 1rem;background:var(--bg-raised);border:1px solid var(--accent-dim);font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.78);letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+.fab a:hover{color:var(--accent);border-color:var(--accent);}
+.book-footer{background:var(--bg-raised);border-top:3px solid var(--accent);padding:1.8rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-folio{font-family:'Playfair Display',Georgia,serif;font-size:calc(var(--base) * 0.95);color:var(--text-soft);text-decoration:none;letter-spacing:0.06em;}
+.footer-folio span{color:var(--accent);font-style:italic;}
+.footer-note{font-family:'Crimson Pro',Georgia,serif;font-style:italic;font-size:calc(var(--base) * 0.88);color:var(--text-dim);}
+.footer-back{font-family:'Crimson Pro',Georgia,serif;font-size:calc(var(--base) * 0.88);color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
+.footer-back:hover{color:var(--accent);}
+@media(max-width:600px){.page-body.shifted{margin-left:0;}}
+</style>
+</head>
+<body>
+<header class="frozen-header">
+  <a href="index.html" class="frozen-home">The <span>Folio</span></a>
+  <span class="frozen-sep">·</span>
+  <span class="frozen-chapter" id="frozen-chapter">Book 07 — It May Be</span>
+  <div class="frozen-controls">
+    <button class="ctrl-btn" onclick="adjustFont(-1)">A&minus;</button>
+    <button class="ctrl-btn" onclick="adjustFont(1)">A+</button>
+    <button class="ctrl-btn" onclick="toggleTheme()" id="theme-btn">&#9728; Day</button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">&#9776;</button>
+  </div>
+</header>
+
+<nav class="sidebar" id="sidebar">
+  <span class="sidebar-label">Contents</span>
+  <a class="sidebar-link" href="#ch-0" data-chapter="ch-0"><span class="sidebar-num">—</span>Silence in the Camp</a>
+  <a class="sidebar-link" href="#ch-1" data-chapter="ch-1"><span class="sidebar-num">I</span>The Stirring and the Companion</a>
+  <a class="sidebar-link" href="#ch-2" data-chapter="ch-2"><span class="sidebar-num">II</span>Between the Rocks</a>
+  <a class="sidebar-link" href="#ch-3" data-chapter="ch-3"><span class="sidebar-num">III</span>The Sign and the Ascent</a>
+  <a class="sidebar-link" href="#ch-4" data-chapter="ch-4"><span class="sidebar-num">IV</span>The Breaking of the Camp</a>
+  <a class="sidebar-link" href="#ch-5" data-chapter="ch-5"><span class="sidebar-num">V</span>The Summons</a>
+  <a class="sidebar-link" href="#ch-6" data-chapter="ch-6"><span class="sidebar-num">VI</span>It May Be</a>
+</nav>
+
+<div class="page-body" id="page-body">
+<div class="book-hero" id="top">
+  <span class="book-eyebrow">The Folio &middot; Book 07 of 12</span>
+  <h1 class="book-title">It May Be</h1>
+  <p class="book-verse">On movement without certainty, and obedience without assurance</p>
+  <p class="book-intro">A prophetic series in six chapters &mdash; drawn from 1 Samuel 14 &mdash; on Jonathan and his armour-bearer, who moved when no word was given, and found that God was not bound to speak before He moved.</p>
+</div>
+
+<div class="book-content">
+
+<!-- PROLOGUE -->
+<div class="chapter" id="ch-0" data-title="— Silence in the Camp">
+<span class="chapter-label">Prologue</span>
+<h2 class="chapter-title">Silence in the Camp</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">No word was given in that day.</span>
+    <span class="line">No prophet spoke. No sign appeared.</span>
+    <br>
+    <span class="line">The camp waited.</span>
+    <span class="line">The king sat apart.</span>
+    <span class="line">The people stood still.</span>
+    <br>
+    <span class="line">Arms were ready. Hearts were not.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; there are times when heaven is silent,<br>
+    and men are left to stand within it.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER I -->
+<div class="chapter" id="ch-1" data-title="I &mdash; The Stirring and the Companion">
+<span class="chapter-label">Chapter I</span>
+<h2 class="chapter-title">The Stirring and the Companion</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">Then a thought arose. Not loud. Not sudden.</span>
+    <br>
+    <span class="line">&ldquo;Let us go over.&rdquo;</span>
+    <br>
+    <span class="line">No command followed it.</span>
+    <span class="line">No confirmation came upon it.</span>
+    <br>
+    <span class="line">Only this word remained:</span>
+    <span class="line">&ldquo;It may be that the Lord will work for us.&rdquo;</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; faith sometimes begins<br>
+    where certainty has not yet spoken.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">He told no council.</span>
+    <span class="line">He sought no approval.</span>
+    <br>
+    <span class="line">Only one stood with him.</span>
+    <span class="line">His armour-bearer.</span>
+    <br>
+    <span class="line">No vision was shared between them.</span>
+    <span class="line">Only trust in motion.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; some callings are borne by few,<br>
+    though they touch many.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER II -->
+<div class="chapter" id="ch-2" data-title="II &mdash; Between the Rocks">
+<span class="chapter-label">Chapter II</span>
+<h2 class="chapter-title">Between the Rocks</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">They went between the rocks.</span>
+    <span class="line">Bozez on one side. Seneh on the other.</span>
+    <br>
+    <span class="line">The path was narrow.</span>
+    <span class="line">The climb was open.</span>
+    <br>
+    <span class="line">Behind them &mdash; retreat.</span>
+    <span class="line">Before them &mdash; the enemy.</span>
+    <br>
+    <span class="line">Yet they went forward.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; obedience often walks<br>
+    where escape is easier than advance.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">&ldquo;If they say, Come up, we will go.&rdquo;</span>
+    <br>
+    <span class="line">Not certainty.</span>
+    <span class="line">Only discernment.</span>
+    <br>
+    <span class="line">Not possession of victory.</span>
+    <span class="line">Only trust in the Lord.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; faith does not demand to see<br>
+    before it moves.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER III -->
+<div class="chapter" id="ch-3" data-title="III &mdash; The Sign and the Ascent">
+<span class="chapter-label">Chapter III</span>
+<h2 class="chapter-title">The Sign and the Ascent</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">They were seen.</span>
+    <br>
+    <span class="line">The enemy spoke.</span>
+    <span class="line">&ldquo;Come up unto us.&rdquo;</span>
+    <br>
+    <span class="line">So the sign was given.</span>
+    <span class="line">Not in safety &mdash; but in exposure.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; sometimes the answer comes<br>
+    only when hiding ends.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">They climbed. Hand and foot.</span>
+    <span class="line">Stone against flesh. Height against breath.</span>
+    <br>
+    <span class="line">No ease was granted them.</span>
+    <span class="line">No strength remained unused.</span>
+    <br>
+    <span class="line">Yet they did not turn back.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; what is of God<br>
+    does not wait for comfort.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER IV -->
+<div class="chapter" id="ch-4" data-title="IV &mdash; The Breaking of the Camp">
+<span class="chapter-label">Chapter IV</span>
+<h2 class="chapter-title">The Breaking of the Camp</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">The first man fell.</span>
+    <span class="line">Then another.</span>
+    <br>
+    <span class="line">Not by numbers. Not by strength.</span>
+    <span class="line">But by the Lord who gave the ground to tremble.</span>
+    <br>
+    <span class="line">Confusion entered the camp.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; God does not need many<br>
+    to begin His work.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">Fear spread.</span>
+    <span class="line">The host broke against itself.</span>
+    <br>
+    <span class="line">What began in silence</span>
+    <span class="line">became unrest beyond measure.</span>
+    <br>
+    <span class="line">The enemy turned upon the enemy.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; what God begins in hidden faith<br>
+    may echo far beyond sight.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">The watchmen saw it.</span>
+    <span class="line">Saul moved. The people rose.</span>
+    <br>
+    <span class="line">Many came after.</span>
+    <span class="line">Few had gone before.</span>
+  </div>
+  <div class="card pull">
+    O soul &mdash; do not wait for the multitude.<br>
+    They often follow what they first resisted.
+  </div>
+</div>
+<div class="card-row">
+  <div class="card pull" style="grid-column:1/-1;">
+    No trumpet marked it.<br>
+    No record praised it.<br><br>
+    Only this remained:<br>
+    two men who moved when no one else moved.<br><br>
+    O soul &mdash; heaven remembers what earth ignores.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER V -->
+<div class="chapter" id="ch-5" data-title="V &mdash; The Summons">
+<span class="chapter-label">Chapter V</span>
+<h2 class="chapter-title">The Summons</h2>
+<div class="card-row">
+  <div class="card">
+    <span class="line">What if no word is given?</span>
+    <span class="line">What if no sign is shown?</span>
+    <br>
+    <span class="line">Will you remain still?</span>
+    <br>
+    <span class="line">Or will you rise?</span>
+    <br>
+    <span class="line">Say not always, &ldquo;I must be certain.&rdquo;</span>
+    <span class="line">Say rather:</span>
+    <br>
+    <span class="line">&ldquo;It may be that the Lord will work.&rdquo;</span>
+  </div>
+  <div class="card pull">
+    For God is not bound to speak<br>
+    before He moves.
+  </div>
+</div>
+</div>
+
+<!-- CHAPTER VI — POEM -->
+<div class="chapter" id="ch-6" data-title="VI &mdash; It May Be">
+<span class="chapter-label">Chapter VI</span>
+<h2 class="chapter-title">It May Be</h2>
+<div class="card-row">
+  <div class="card pull" style="grid-column:1/-1; text-align:center; border-left:none; border-top:3px solid var(--pull-color);">
+    I T &nbsp; M A Y &nbsp; B E
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">No voice was heard upon the land,</span>
+    <span class="line">No sign was set above;</span>
+    <span class="line">Yet one arose and would not wait,</span>
+    <span class="line">But trusted in the Lord.</span>
+  </div>
+  <div class="card">
+    <span class="line">Between the rocks he took his path,</span>
+    <span class="line">With danger on each side;</span>
+    <span class="line">Yet still he went where fear would stop</span>
+    <span class="line">The many who would hide.</span>
+  </div>
+</div>
+<div class="card-row">
+  <div class="card">
+    <span class="line">The first fell there. The camp broke loose.</span>
+    <span class="line">The trembling filled the air;</span>
+    <span class="line">What few began in silent trust</span>
+    <span class="line">God made a work of power.</span>
+  </div>
+  <div class="card pull">
+    O soul, go forth though all be still,<br>
+    And light be hid from thee;<br>
+    For God is near the step of faith &mdash;<br>
+    In &ldquo;it may be.&rdquo;
+  </div>
+</div>
+<div class="chapter-nav">
+  <a href="book-06.html">&larr; Book 06</a>
+  <a href="#top">&uarr; Top</a>
+  <a href="book-08.html">Book 08 &rarr;</a>
+</div>
+</div>
+
+</div><!-- /book-content -->
+<div class="fab" id="fab"><a href="#top">&uarr; Top</a></div>
+<footer class="book-footer">
+  <a href="index.html" class="footer-folio">The <span>Folio</span></a>
+  <span class="footer-note">Book 07 of 12 &middot; Private Works</span>
+  <a href="index.html" class="footer-back">&larr; All Books</a>
+</footer>
+</div><!-- /page-body -->
+<script>
+const sidebar=document.getElementById('sidebar');const pageBody=document.getElementById('page-body');let sidebarOpen=false;
+function toggleSidebar(){sidebarOpen=!sidebarOpen;sidebar.classList.toggle('open',sidebarOpen);if(window.innerWidth>700)pageBody.classList.toggle('shifted',sidebarOpen);}
+let currentTheme='night';
+function toggleTheme(){currentTheme=currentTheme==='night'?'day':'night';document.documentElement.setAttribute('data-theme',currentTheme);document.getElementById('theme-btn').textContent=currentTheme==='night'?'☀ Day':'☾ Night';}
+const fontSizes=[14,16,18,20,22,24];let fontIdx=2;
+function adjustFont(dir){fontIdx=Math.max(0,Math.min(fontSizes.length-1,fontIdx+dir));document.documentElement.style.setProperty('--base',fontSizes[fontIdx]+'px');}
+const chapters=document.querySelectorAll('.chapter[data-title]');const frozenLabel=document.getElementById('frozen-chapter');const sidebarLinks=document.querySelectorAll('.sidebar-link');
+const chapterObserver=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){frozenLabel.textContent=entry.target.getAttribute('data-title');const id=entry.target.getAttribute('id');sidebarLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('data-chapter')===id));}});},{rootMargin:'-52px 0px -60% 0px',threshold:0});
+chapters.forEach(ch=>chapterObserver.observe(ch));
+const fab=document.getElementById('fab');window.addEventListener('scroll',()=>fab.classList.toggle('visible',window.scrollY>400));
+sidebarLinks.forEach(link=>link.addEventListener('click',()=>{if(window.innerWidth<=700){sidebarOpen=false;sidebar.classList.remove('open');}}));
+</script>
+</body>
+</html>
