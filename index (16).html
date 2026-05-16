@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Folio — Private Works by John Christopher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════
+   ROOT
+═══════════════════════════════════════ */
+:root {
+  --ink:        #16130f;
+  --ink-soft:   #1e1b16;
+  --ink-mid:    #252018;
+  --paper:      #f5f0e8;
+  --paper-dim:  #e8e2d6;
+  --paper-dark: #d4ccbc;
+  --text:       #2a2520;
+  --text-soft:  #5a5248;
+  --text-dim:   #4a4440;
+  --red:        #8b2020;
+  --red-soft:   #a83030;
+  --red-dim:    #5a1515;
+  --red-faint:  #f2eaea;
+  --gold:       #b89a60;
+  --gold-dim:   #8a7248;
+  --rule:       #8a8070;
+  --rule-light: rgba(138,128,112,0.35);
+  --serif:      'Playfair Display', Georgia, serif;
+  --body:       'Crimson Pro', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 400;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.folio-header {
+  background: var(--ink);
+  padding: 3.4rem 0 2.6rem;
+  border-bottom: 3px solid var(--gold);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle texture lines */
+.folio-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.015) 0px,
+    rgba(255,255,255,0.015) 1px,
+    transparent 1px,
+    transparent 48px
+  );
+  pointer-events: none;
+}
+
+.folio-header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.folio-eyebrow {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.folio-name {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 700;
+  color: var(--paper-dim);
+  letter-spacing: 0.06em;
+  line-height: 1.08;
+  margin-bottom: 0.6rem;
+}
+
+.folio-name em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.folio-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-dim);
+  margin: 1rem auto;
+  opacity: 0.6;
+}
+
+.folio-tagline {
+  font-family: var(--body);
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--paper-dark);
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════
+   PRACTICE BAND
+═══════════════════════════════════════ */
+.jl-band {
+  background: var(--ink-soft);
+  border-bottom: 1px solid rgba(184,154,96,0.12);
+  padding: 3rem 0 3.4rem;
+}
+
+.jl-band-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.8rem;
+  align-items: start;
+}
+
+@media (max-width: 560px) {
+  .jl-band-inner { grid-template-columns: 1fr; }
+  .jl-logo-wrap  { flex-direction: row; align-items: center; gap: 1rem; }
+}
+
+.jl-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+}
+
+.jl-name {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--paper-dark);
+}
+
+.jl-heading {
+  font-family: var(--body);
+  font-size: 0.66rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.jl-desc {
+  font-family: var(--body);
+  font-size: 1.02rem;
+  line-height: 1.88;
+  color: #bdb5a4;
+}
+
+.jl-desc p { margin-bottom: 0.9rem; }
+.jl-desc p:last-child { margin-bottom: 0; }
+
+/* ═══════════════════════════════════════
+   COLLECTION LABEL BAND
+═══════════════════════════════════════ */
+.intro-band {
+  background: var(--ink-mid);
+  border-bottom: 1px solid rgba(184,154,96,0.08);
+  padding: 1.2rem 0;
+  text-align: center;
+}
+
+.intro-band p {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--paper-dark);
+  letter-spacing: 0.06em;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ═══════════════════════════════════════
+   LIBRARY
+═══════════════════════════════════════ */
+.library {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3.6rem 2rem 6rem;
+}
+
+.library-label {
+  font-family: var(--body);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2.2rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.library-count {
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--text-soft);
+}
+
+/* ═══════════════════════════════════════
+   BOOK ROWS
+═══════════════════════════════════════ */
+.book-list { list-style: none; }
+
+.book-item {
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fadeUp 0.45s ease forwards;
+}
+
+.book-item:first-child { border-top: 1px solid var(--rule); }
+
+.book-item:nth-child(1)  { animation-delay: 0.05s; }
+.book-item:nth-child(2)  { animation-delay: 0.10s; }
+.book-item:nth-child(3)  { animation-delay: 0.15s; }
+.book-item:nth-child(4)  { animation-delay: 0.20s; }
+.book-item:nth-child(5)  { animation-delay: 0.25s; }
+.book-item:nth-child(6)  { animation-delay: 0.30s; }
+.book-item:nth-child(7)  { animation-delay: 0.35s; }
+.book-item:nth-child(8)  { animation-delay: 0.40s; }
+.book-item:nth-child(9)  { animation-delay: 0.45s; }
+.book-item:nth-child(10) { animation-delay: 0.50s; }
+.book-item:nth-child(11) { animation-delay: 0.55s; }
+.book-item:nth-child(12) { animation-delay: 0.60s; }
+.book-item:nth-child(13) { animation-delay: 0.65s; }
+.book-item:nth-child(14) { animation-delay: 0.69s; }
+.book-item:nth-child(15) { animation-delay: 0.73s; }
+.book-item:nth-child(16) { animation-delay: 0.77s; }
+.book-item:nth-child(17) { animation-delay: 0.81s; }
+.book-item:nth-child(18) { animation-delay: 0.85s; }
+.book-item:nth-child(19) { animation-delay: 0.89s; }
+.book-item:nth-child(20) { animation-delay: 0.93s; }
+.book-item:nth-child(21) { animation-delay: 0.97s; }
+
+/* Published book link */
+.book-link {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem 0.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.18s;
+}
+
+.book-link:hover { background: var(--red-faint); }
+.book-link:hover .book-title { color: var(--red); }
+.book-link:hover .book-arrow { color: var(--red); transform: translateX(4px); }
+
+/* Pending row — not a link */
+.book-row-pending {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.35rem 0.4rem;
+  cursor: default;
+  user-select: none;
+}
+
+.book-num {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--red-dim);
+  text-align: right;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.book-item.pending .book-num {
+  color: var(--rule);
+}
+
+.book-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.book-title {
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.18s;
+  line-height: 1.3;
+}
+
+.book-item.pending .book-title {
+  color: var(--rule);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.book-meta {
+  font-family: var(--body);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.book-status {
+  font-family: var(--body);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid var(--red-dim);
+  color: var(--red-soft);
+  background: var(--red-faint);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.book-item.pending .book-status {
+  border-color: rgba(138,128,112,0.3);
+  color: var(--rule);
+  background: transparent;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+}
+
+.book-arrow {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  transition: color 0.18s, transform 0.18s;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.folio-footer {
+  background: var(--ink);
+  border-top: 3px solid var(--gold);
+  padding: 2.2rem 0;
+}
+
+.folio-footer-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.12em;
+}
+
+.footer-note {
+  font-family: var(--body);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--paper-dark);
+}
+
+.footer-contact {
+  font-family: var(--body);
+  font-size: 0.86rem;
+  color: var(--paper-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-contact:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════
+   ANIMATION
+═══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .book-link { grid-template-columns: 2.2rem 1fr; gap: 1rem; }
+  .book-status { display: none; }
+  .book-arrow  { display: none; }
+  .book-row-pending { grid-template-columns: 2.2rem 1fr; }
+  .book-item.pending .book-status { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="folio-header" id="top">
+  <div class="folio-header-inner">
+    <span class="folio-eyebrow">John Christopher &middot; Works in Commission</span>
+    <h1 class="folio-name">The <em>Folio</em></h1>
+    <div class="folio-rule"></div>
+    <p class="folio-tagline">A library of works produced under private commission</p>
+  </div>
+</header>
+
+<!-- PRACTICE BAND -->
+<div class="jl-band">
+  <div class="jl-band-inner">
+
+    <div class="jl-logo-wrap">
+      <svg width="44" height="68" viewBox="0 0 52 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M26 6L46 34L26 90L6 34Z" stroke="#b89a60" stroke-width="1.2" stroke-linejoin="round"/>
+        <line x1="26" y1="42" x2="26" y2="90" stroke="#b89a60" stroke-width="0.9"/>
+        <circle cx="26" cy="38" r="3.5" fill="#8b2020"/>
+        <line x1="14" y1="50" x2="26" y2="90" stroke="#b89a60" stroke-width="0.65"/>
+        <line x1="38" y1="50" x2="26" y2="90" stroke="#b89a60" stroke-width="0.65"/>
+        <line x1="6"  y1="34" x2="26" y2="42" stroke="#b89a60" stroke-width="0.9"/>
+        <line x1="46" y1="34" x2="26" y2="42" stroke="#b89a60" stroke-width="0.9"/>
+      </svg>
+      <span class="jl-name">JaceyLang</span>
+    </div>
+
+    <div class="jl-text">
+      <span class="jl-heading">About the Author</span>
+      <div class="jl-desc">
+        <p>JaceyLang is the public-facing practice of John Christopher. The folio to which access has been granted comprises commissioned works undertaken under private engagement.</p>
+        <p>Each piece proceeds from a defined brief, and from the understanding that language is not ornament, but function. Precision is assumed; haste finds no place here.</p>
+        <p>These are neither drafts nor speculative samples. They are delivered works — considered, resolved, and shared in discretion, to be read in that same spirit.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="intro-band">
+  <p>Each volume in this library represents a work produced under private commission. Those with access may select a title to read.</p>
+</div>
+
+<!-- LIBRARY -->
+<div class="library">
+  <div class="library-label">
+    <span>The Collection</span>
+    <span class="library-count">21 Works Published</span>
+  </div>
+
+  <ul class="book-list">
+
+    <!-- Published -->
+    <li class="book-item">
+      <a href="book-01.html" class="book-link">
+        <span class="book-num">01</span>
+        <div class="book-body">
+          <span class="book-title">Alas, Master — For It Is Borrowed</span>
+          <span class="book-meta">Funds Held in Trust</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-02.html" class="book-link">
+        <span class="book-num">02</span>
+        <div class="book-body">
+          <span class="book-title">All Asia Turned Away</span>
+          <span class="book-meta">&hellip;and the Soul Found It in God&hellip;</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-03.html" class="book-link">
+        <span class="book-num">03</span>
+        <div class="book-body">
+          <span class="book-title">According to the Vessels</span>
+          <span class="book-meta">On capacity, limitation, and the restraint of grace</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-04.html" class="book-link">
+        <span class="book-num">04</span>
+        <div class="book-body">
+          <span class="book-title">That Which Was Not His</span>
+          <span class="book-meta">On stewardship, restraint, and increase under another&rsquo;s hand</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-05.html" class="book-link">
+        <span class="book-num">05</span>
+        <div class="book-body">
+          <span class="book-title">Notwithstanding the Lord Stood</span>
+          <span class="book-meta">On divine reckoning amidst abandonment and silence</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-06.html" class="book-link">
+        <span class="book-num">06</span>
+        <div class="book-body">
+          <span class="book-title">Before the Lord He Stood</span>
+          <span class="book-meta">On defilement, accusation, and the imputed restoration of God</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-07.html" class="book-link">
+        <span class="book-num">07</span>
+        <div class="book-body">
+          <span class="book-title">It May Be</span>
+          <span class="book-meta">On movement without certainty, and obedience without assurance</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-08.html" class="book-link">
+        <span class="book-num">08</span>
+        <div class="book-body">
+          <span class="book-title">The Man of God from Judah</span>
+          <span class="book-meta">On obedience divided, and the cost of turning aside</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-09.html" class="book-link">
+        <span class="book-num">09</span>
+        <div class="book-body">
+          <span class="book-title">Though It Tarry</span>
+          <span class="book-meta">On the soul corrected by the answer it did not expect</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-10.html" class="book-link">
+        <span class="book-num">10</span>
+        <div class="book-body">
+          <span class="book-title">I Sat Alone</span>
+          <span class="book-meta">On the soul confined under the hand of God, and the word that wounds its bearer</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-11.html" class="book-link">
+        <span class="book-num">11</span>
+        <div class="book-body">
+          <span class="book-title">The Silence That Remained</span>
+          <span class="book-meta">On the soul that cannot find God, yet discovers it cannot leave Him</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-12.html" class="book-link">
+        <span class="book-num">12</span>
+        <div class="book-body">
+          <span class="book-title">Be Thou to Us Instead of Eyes</span>
+          <span class="book-meta">On the soul that loses all guidance, and is given God instead</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-13.html" class="book-link">
+        <span class="book-num">13</span>
+        <div class="book-body">
+          <span class="book-title">By Whom the Word Came</span>
+          <span class="book-meta">On the soul that can no longer discern, and must receive without sight</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-14.html" class="book-link">
+        <span class="book-num">14</span>
+        <div class="book-body">
+          <span class="book-title">Without the Camp</span>
+          <span class="book-meta">On the soul that must go forth unto God, apart from what once held His presence</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-15.html" class="book-link">
+        <span class="book-num">15</span>
+        <div class="book-body">
+          <span class="book-title">Not in the Fire</span>
+          <span class="book-meta">On the soul that has gone forth unto God, yet cannot find Him in what appears</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-16.html" class="book-link">
+        <span class="book-num">16</span>
+        <div class="book-body">
+          <span class="book-title">Seek Them Not</span>
+          <span class="book-meta">On the soul that has obeyed, endured, and received no rest</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-17.html" class="book-link">
+        <span class="book-num">17</span>
+        <div class="book-body">
+          <span class="book-title">Doest Thou Well to Be Angry?</span>
+          <span class="book-meta">On the soul that has obeyed, endured, and yet cannot agree with God</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-18.html" class="book-link">
+        <span class="book-num">18</span>
+        <div class="book-body">
+          <span class="book-title">O My Son Absalom</span>
+          <span class="book-meta">On the soul that must submit to the will of God, yet cannot cease to love what He has taken</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-19.html" class="book-link">
+        <span class="book-num">19</span>
+        <div class="book-body">
+          <span class="book-title">It Was Not Hidden From Thee</span>
+          <span class="book-meta">On the soul that begins to suspect that what it suffers is not incidental, but inherent to the way itself</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-20.html" class="book-link">
+        <span class="book-num">20</span>
+        <div class="book-body">
+          <span class="book-title">After This No More Asking</span>
+          <span class="book-meta">On the soul where the need to understand has ceased</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+    <li class="book-item">
+      <a href="book-21.html" class="book-link">
+        <span class="book-num">21</span>
+        <div class="book-body">
+          <span class="book-title">A Summons from the Sanctuary</span>
+          <span class="book-meta">When ministration leads to weariness</span>
+        </div>
+        <span class="book-status">Published</span>
+        <span class="book-arrow">→</span>
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+<footer class="folio-footer">
+  <div class="folio-footer-inner">
+    <span class="footer-name">The Folio</span>
+    <span class="footer-note">Works in commission by John Christopher</span>
+    <a href="mailto:jaceylang16@outlook.com" class="footer-contact">jaceylang16@outlook.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
