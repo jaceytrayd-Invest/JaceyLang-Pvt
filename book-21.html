@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Book 21 — Asaph: A Summons from the Sanctuary | The Folio</title>
+<title>Book 21 — A Summons from the Sanctuary | The Folio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
@@ -11,27 +11,27 @@
   /* ── Root tokens ── */
   :root {
     --bg:        #0e0d0b;
-    --surface:   #141310;
-    --border:    #2a2620;
-    --gold:      #c9a84c;
-    --gold-dim:  #8a6e2e;
-    --text:      #d4cfc7;
-    --text-dim:  #7a7570;
-    --text-faint:#3e3a36;
-    --accent:    #c9a84c;
+    --surface:   #1a1916;
+    --border:    #4a4540;
+    --gold:      #d4a843;
+    --gold-dim:  #c49838;
+    --text:      #e8e3db;
+    --text-dim:  #c0b8ac;
+    --text-faint:#96907a;
+    --accent:    #d4a843;
     --font-body: 'Cormorant Garamond', Georgia, serif;
     --font-alt:  'IM Fell English', Georgia, serif;
-    --fs: 1.2rem;
+    --fs: 1.25rem;
   }
   .day-mode {
-    --bg:       #f5f0e8;
-    --surface:  #ede7db;
-    --border:   #d0c8b8;
-    --text:     #1a1814;
-    --text-dim: #5a5550;
-    --text-faint:#b0a898;
-    --gold:     #8a6010;
-    --gold-dim: #b08030;
+    --bg:        #f5f0e8;
+    --surface:   #ede7db;
+    --border:    #b0a898;
+    --text:      #1a1814;
+    --text-dim:  #3a3530;
+    --text-faint:#6a6560;
+    --gold:      #8a6010;
+    --gold-dim:  #7a5808;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,15 +70,15 @@
   #topbar a.home-link:hover { color: var(--gold); }
   .topbar-title {
     font-size: .78rem; letter-spacing: .08em;
-    color: var(--text-dim); text-transform: uppercase;
+    color: var(--text); text-transform: uppercase;
     flex: 1; text-align: center;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .topbar-controls { display: flex; align-items: center; gap: .6rem; }
   .ctrl-btn {
     background: none; border: 1px solid var(--border);
-    color: var(--text-dim); cursor: pointer;
-    font-family: var(--font-body); font-size: .75rem;
+    color: var(--text); cursor: pointer;
+    font-family: var(--font-body); font-size: .82rem;
     padding: .22rem .5rem; border-radius: 2px;
     transition: color .2s, border-color .2s;
     line-height: 1;
@@ -104,22 +104,22 @@
   }
   #toc-overlay.open { display: block; }
   #toc-drawer h2 {
-    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--gold-dim); margin-bottom: 1.4rem;
+    font-size: .85rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.4rem;
   }
   #toc-drawer ul { list-style: none; }
   #toc-drawer ul li { margin-bottom: .1rem; }
   #toc-drawer ul li a {
     display: flex; align-items: baseline; gap: .5rem;
-    color: var(--text-dim); text-decoration: none;
-    font-size: .92rem; padding: .35rem 0;
-    border-bottom: 1px solid var(--text-faint);
+    color: var(--text); text-decoration: none;
+    font-size: 1rem; padding: .38rem 0;
+    border-bottom: 1px solid var(--border);
     transition: color .2s;
     line-height: 1.35;
   }
   #toc-drawer ul li a:hover { color: var(--gold); }
   #toc-drawer ul li a .toc-num {
-    font-size: .68rem; letter-spacing: .1em; color: var(--gold-dim);
+    font-size: .82rem; letter-spacing: .08em; color: var(--gold);
     min-width: 1.6rem; flex-shrink: 0;
   }
   #toc-close {
@@ -139,11 +139,11 @@
 
   /* ── Header block ── */
   .book-eyebrow {
-    font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--gold-dim); margin-bottom: .6rem;
+    font-size: .82rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: .6rem;
     display: flex; gap: .8rem; align-items: center;
   }
-  .book-eyebrow span { color: var(--text-faint); }
+  .book-eyebrow span { color: var(--text-dim); }
   h1.book-title {
     font-size: clamp(2rem, 6vw, 3rem);
     font-weight: 500; font-style: italic;
@@ -153,12 +153,12 @@
     letter-spacing: -.01em;
   }
   .book-subtitle {
-    font-size: 1rem; color: var(--text-dim);
+    font-size: 1.1rem; color: var(--text);
     font-style: italic; letter-spacing: .02em;
     margin-bottom: 1.4rem;
   }
   .book-desc {
-    font-size: 1rem; color: var(--text-dim);
+    font-size: 1.05rem; color: var(--text-dim);
     line-height: 1.75; max-width: 560px;
     border-left: 2px solid var(--gold-dim);
     padding-left: 1rem;
@@ -169,8 +169,8 @@
   /* ── Chapter sections ── */
   .chapter { margin-bottom: 3.6rem; }
   .chapter-label {
-    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--gold-dim); margin-bottom: .5rem;
+    font-size: .85rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: .6rem;
     display: flex; align-items: center; gap: .6rem;
   }
   .chapter-label::after {
@@ -196,8 +196,8 @@
     padding: 1rem 0 1rem 1.4rem;
     border-left: 2px solid var(--gold);
     font-style: italic;
-    font-size: calc(var(--fs) * .98);
-    color: var(--text-dim);
+    font-size: calc(var(--fs) * 1.0);
+    color: var(--text);
     line-height: 1.95;
   }
   .stanza .line { display: block; }
@@ -216,15 +216,15 @@
   }
   .pull-quote cite {
     display: block; margin-top: .6rem;
-    font-size: .8rem; letter-spacing: .1em;
-    color: var(--gold-dim); font-style: normal;
+    font-size: .9rem; letter-spacing: .08em;
+    color: var(--gold); font-style: normal;
     text-transform: uppercase;
   }
 
   /* ── Interlude label ── */
   .interlude-label {
-    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: .5rem;
+    font-size: .85rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: .6rem;
     display: flex; align-items: center; gap: .6rem;
   }
   .interlude-label::after {
@@ -247,8 +247,8 @@
     margin-bottom: .5rem;
   }
   .poem-meter-label {
-    font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--text-faint);
+    font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-dim);
   }
   .poem-stanzas {
     margin: 0 auto;
@@ -267,7 +267,7 @@
     margin-top: 2rem;
     text-align: center;
     font-style: italic;
-    color: var(--gold-dim);
+    color: var(--text);
     font-size: calc(var(--fs) * .9);
     line-height: 1.9;
   }
@@ -280,13 +280,13 @@
     font-size: .9rem;
   }
   .chapter-nav a {
-    color: var(--gold-dim); text-decoration: none;
+    color: var(--gold); text-decoration: none;
     display: flex; align-items: center; gap: .4rem;
     transition: color .2s;
   }
   .chapter-nav a:hover { color: var(--gold); }
   .chapter-nav .nav-top {
-    color: var(--text-faint); cursor: pointer;
+    color: var(--text-dim); cursor: pointer;
     background: none; border: none; font-family: var(--font-body);
     font-size: .9rem; text-decoration: none;
   }
@@ -296,23 +296,23 @@
   footer {
     text-align: center; padding: 2rem 1.6rem 3rem;
     border-top: 1px solid var(--border);
-    font-size: .78rem; color: var(--text-faint);
+    font-size: .88rem; color: var(--text-dim);
     letter-spacing: .06em;
     line-height: 1.9;
   }
-  footer a { color: var(--text-faint); text-decoration: none; }
+  footer a { color: var(--text-dim); text-decoration: none; }
   footer a:hover { color: var(--gold-dim); }
 
   /* ── Study questions ── */
   .study-section { margin-bottom: 2.8rem; }
   .study-section h3 {
-    font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--gold-dim); margin-bottom: 1rem;
+    font-size: .92rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
   }
   .study-section ol {
     padding-left: 1.4rem;
-    color: var(--text-dim);
-    font-size: calc(var(--fs) * .93);
+    color: var(--text);
+    font-size: calc(var(--fs) * 1.0);
     line-height: 1.85;
   }
   .study-section ol li { margin-bottom: .7rem; }
@@ -329,8 +329,8 @@
 
 <!-- Top bar -->
 <nav id="topbar">
-  <a class="home-link" href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">The Folio</a>
-  <span class="topbar-title">Book 21 — Asaph: A Summons from the Sanctuary</span>
+  <a class="home-link" href="index.html">The Folio</a>
+  <span class="topbar-title">Book 21 — A Summons from the Sanctuary</span>
   <div class="topbar-controls">
     <button class="ctrl-btn" id="font-down" title="Decrease font size">A−</button>
     <button class="ctrl-btn" id="font-up" title="Increase font size">A+</button>
@@ -367,11 +367,8 @@
 <main>
 
   <!-- Header -->
-  <div class="book-eyebrow">
-    <span>The Folio · Book 21</span>
-  </div>
-  <h1 class="book-title">Asaph: A Summons from the Sanctuary</h1>
-  <p class="book-subtitle">Meditations on Psalm 73</p>
+  <h1 class="book-title">A Summons from the Sanctuary</h1>
+  <p class="book-subtitle">Meditations on Psalm 73 — When ministration leads to weariness</p>
   <p class="book-desc">
     A prophetic series in ten parts — drawn from the testimony of Asaph in Psalm 73 — on the man who ministered near holy things while quietly collapsing beneath them; who entered the sanctuary and emerged not with answers, but with God as his portion.
   </p>
@@ -405,8 +402,10 @@
   <hr class="rule" />
 
   <!-- SECTION I HEADER -->
-  <div class="book-eyebrow" style="margin-bottom:1.8rem;">
-    <span>Section I — The Man Before the Sanctuary</span>
+  <div style="margin: 3.2rem 0 2rem; padding: 1rem 1.2rem; border: 1px solid var(--gold); background: rgba(212,168,67,.06);">
+    <div style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;">Section I</div>
+    <div style="font-size:1.2rem;font-style:italic;color:var(--text);letter-spacing:.02em;">The Man Before the Sanctuary</div>
+    <div style="font-size:.9rem;color:var(--text-dim);margin-top:.3rem;">Parts I – V</div>
   </div>
 
   <!-- PART I -->
@@ -554,8 +553,10 @@
   <hr class="rule" />
 
   <!-- SECTION II HEADER -->
-  <div class="book-eyebrow" style="margin-bottom:1.8rem;">
-    <span>Section II — The Man After the Sanctuary</span>
+  <div style="margin: 3.2rem 0 2rem; padding: 1rem 1.2rem; border: 1px solid var(--gold); background: rgba(212,168,67,.06);">
+    <div style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;">Section II</div>
+    <div style="font-size:1.2rem;font-style:italic;color:var(--text);letter-spacing:.02em;">The Man After the Sanctuary</div>
+    <div style="font-size:.9rem;color:var(--text-dim);margin-top:.3rem;">Parts VI – X</div>
   </div>
 
   <!-- PART VI -->
@@ -932,25 +933,25 @@
 
   <!-- Navigation -->
   <nav class="chapter-nav">
-    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/book-20.html">← Book 20</a>
-    <a href="#top" class="nav-top">↑ Top</a>
-    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/book-22.html">Book 22 →</a>
+    <a href="book-20.html">&larr; Book 20</a>
+    <a href="#top" class="nav-top">&uarr; Top</a>
+    <a href="book-22.html">Book 22 &rarr;</a>
   </nav>
 
   <div style="height:.6rem;"></div>
   <div style="text-align:center;margin-top:1.2rem;">
-    <a href="#top" style="font-size:.78rem;color:var(--text-faint);text-decoration:none;letter-spacing:.06em;">↑ Top</a>
+    <a href="#top" style="font-size:.9rem;color:var(--text-dim);text-decoration:none;letter-spacing:.06em;">↑ Top</a>
   </div>
 
 </main>
 
 <footer>
   <div>
-    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">The Folio</a>
+    <a href="index.html">The Folio</a>
     &nbsp;·&nbsp; Book 21 &nbsp;·&nbsp; Private Works
   </div>
   <div style="margin-top:.4rem;">
-    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">← All Books</a>
+    <a href="index.html">← All Books</a>
   </div>
 </footer>
 
