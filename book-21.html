@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book 21 — Asaph: A Summons from the Sanctuary | The Folio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  /* ── Root tokens ── */
+  :root {
+    --bg:        #0e0d0b;
+    --surface:   #141310;
+    --border:    #2a2620;
+    --gold:      #c9a84c;
+    --gold-dim:  #8a6e2e;
+    --text:      #d4cfc7;
+    --text-dim:  #7a7570;
+    --text-faint:#3e3a36;
+    --accent:    #c9a84c;
+    --font-body: 'Cormorant Garamond', Georgia, serif;
+    --font-alt:  'IM Fell English', Georgia, serif;
+    --fs: 1.2rem;
+  }
+  .day-mode {
+    --bg:       #f5f0e8;
+    --surface:  #ede7db;
+    --border:   #d0c8b8;
+    --text:     #1a1814;
+    --text-dim: #5a5550;
+    --text-faint:#b0a898;
+    --gold:     #8a6010;
+    --gold-dim: #b08030;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--fs);
+    font-weight: 400;
+    line-height: 1.85;
+    transition: background .3s, color .3s;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+  /* ── Top bar ── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .55rem 1.4rem;
+    gap: 1rem;
+  }
+  #topbar a.home-link {
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold-dim); text-decoration: none;
+    white-space: nowrap;
+  }
+  #topbar a.home-link:hover { color: var(--gold); }
+  .topbar-title {
+    font-size: .78rem; letter-spacing: .08em;
+    color: var(--text-dim); text-transform: uppercase;
+    flex: 1; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .topbar-controls { display: flex; align-items: center; gap: .6rem; }
+  .ctrl-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-dim); cursor: pointer;
+    font-family: var(--font-body); font-size: .75rem;
+    padding: .22rem .5rem; border-radius: 2px;
+    transition: color .2s, border-color .2s;
+    line-height: 1;
+  }
+  .ctrl-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+  #toc-toggle { font-size: .9rem; padding: .22rem .55rem; }
+
+  /* ── TOC drawer ── */
+  #toc-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: min(320px, 85vw);
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    transform: translateX(110%);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto;
+    padding: 4rem 1.6rem 2rem;
+  }
+  #toc-drawer.open { transform: translateX(0); }
+  #toc-overlay {
+    display: none; position: fixed; inset: 0; z-index: 199;
+    background: rgba(0,0,0,.5);
+  }
+  #toc-overlay.open { display: block; }
+  #toc-drawer h2 {
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 1.4rem;
+  }
+  #toc-drawer ul { list-style: none; }
+  #toc-drawer ul li { margin-bottom: .1rem; }
+  #toc-drawer ul li a {
+    display: flex; align-items: baseline; gap: .5rem;
+    color: var(--text-dim); text-decoration: none;
+    font-size: .92rem; padding: .35rem 0;
+    border-bottom: 1px solid var(--text-faint);
+    transition: color .2s;
+    line-height: 1.35;
+  }
+  #toc-drawer ul li a:hover { color: var(--gold); }
+  #toc-drawer ul li a .toc-num {
+    font-size: .68rem; letter-spacing: .1em; color: var(--gold-dim);
+    min-width: 1.6rem; flex-shrink: 0;
+  }
+  #toc-close {
+    position: absolute; top: .9rem; right: 1rem;
+    background: none; border: none; color: var(--text-dim);
+    font-size: 1.1rem; cursor: pointer; padding: .3rem;
+  }
+  #toc-close:hover { color: var(--gold); }
+
+  /* ── Main layout ── */
+  #top { display: block; height: 0; }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 5.5rem 1.6rem 4rem;
+  }
+
+  /* ── Header block ── */
+  .book-eyebrow {
+    font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: .6rem;
+    display: flex; gap: .8rem; align-items: center;
+  }
+  .book-eyebrow span { color: var(--text-faint); }
+  h1.book-title {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 500; font-style: italic;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: .4rem;
+    letter-spacing: -.01em;
+  }
+  .book-subtitle {
+    font-size: 1rem; color: var(--text-dim);
+    font-style: italic; letter-spacing: .02em;
+    margin-bottom: 1.4rem;
+  }
+  .book-desc {
+    font-size: 1rem; color: var(--text-dim);
+    line-height: 1.75; max-width: 560px;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 1rem;
+    margin-bottom: 2.8rem;
+  }
+  .rule { border: none; border-top: 1px solid var(--border); margin: 2.4rem 0; }
+
+  /* ── Chapter sections ── */
+  .chapter { margin-bottom: 3.6rem; }
+  .chapter-label {
+    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .chapter-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  h2.chapter-title {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 500; font-style: italic;
+    color: var(--text);
+    line-height: 1.2; margin-bottom: 1.3rem;
+    letter-spacing: -.01em;
+  }
+  .chapter-body p {
+    margin-bottom: 1rem;
+    font-size: var(--fs);
+    line-height: 1.9;
+  }
+  .chapter-body p:last-child { margin-bottom: 0; }
+
+  /* ── Stanza pull-quote ── */
+  .stanza {
+    margin: 1.8rem 0;
+    padding: 1rem 0 1rem 1.4rem;
+    border-left: 2px solid var(--gold);
+    font-style: italic;
+    font-size: calc(var(--fs) * .98);
+    color: var(--text-dim);
+    line-height: 1.95;
+  }
+  .stanza .line { display: block; }
+
+  /* ── Pull quote (epigraph style) ── */
+  .pull-quote {
+    margin: 2rem 0;
+    padding: 1.4rem 1.6rem;
+    border-top: 1px solid var(--gold-dim);
+    border-bottom: 1px solid var(--gold-dim);
+    text-align: center;
+    font-style: italic;
+    font-size: calc(var(--fs) * 1.1);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .pull-quote cite {
+    display: block; margin-top: .6rem;
+    font-size: .8rem; letter-spacing: .1em;
+    color: var(--gold-dim); font-style: normal;
+    text-transform: uppercase;
+  }
+
+  /* ── Interlude label ── */
+  .interlude-label {
+    font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .interlude-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Closing poem ── */
+  .poem-section {
+    margin-top: 3rem;
+  }
+  .poem-title-block {
+    text-align: center; margin-bottom: 2.4rem;
+  }
+  .poem-title-spaced {
+    font-size: clamp(.9rem, 3vw, 1.2rem);
+    letter-spacing: .35em; text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    display: block;
+    margin-bottom: .5rem;
+  }
+  .poem-meter-label {
+    font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .poem-stanzas {
+    margin: 0 auto;
+    max-width: 520px;
+  }
+  .poem-stanzas .stanza {
+    border-left: none;
+    padding-left: 0;
+    text-align: center;
+    margin: 1.6rem 0;
+    font-size: calc(var(--fs) * .97);
+    color: var(--text);
+  }
+  .poem-stanzas .stanza .line { display: block; line-height: 2; }
+  .poem-coda {
+    margin-top: 2rem;
+    text-align: center;
+    font-style: italic;
+    color: var(--gold-dim);
+    font-size: calc(var(--fs) * .9);
+    line-height: 1.9;
+  }
+
+  /* ── Navigation ── */
+  .chapter-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 3.6rem; padding-top: 1.4rem;
+    border-top: 1px solid var(--border);
+    font-size: .9rem;
+  }
+  .chapter-nav a {
+    color: var(--gold-dim); text-decoration: none;
+    display: flex; align-items: center; gap: .4rem;
+    transition: color .2s;
+  }
+  .chapter-nav a:hover { color: var(--gold); }
+  .chapter-nav .nav-top {
+    color: var(--text-faint); cursor: pointer;
+    background: none; border: none; font-family: var(--font-body);
+    font-size: .9rem; text-decoration: none;
+  }
+  .chapter-nav .nav-top:hover { color: var(--gold); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 2rem 1.6rem 3rem;
+    border-top: 1px solid var(--border);
+    font-size: .78rem; color: var(--text-faint);
+    letter-spacing: .06em;
+    line-height: 1.9;
+  }
+  footer a { color: var(--text-faint); text-decoration: none; }
+  footer a:hover { color: var(--gold-dim); }
+
+  /* ── Study questions ── */
+  .study-section { margin-bottom: 2.8rem; }
+  .study-section h3 {
+    font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 1rem;
+  }
+  .study-section ol {
+    padding-left: 1.4rem;
+    color: var(--text-dim);
+    font-size: calc(var(--fs) * .93);
+    line-height: 1.85;
+  }
+  .study-section ol li { margin-bottom: .7rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 520px) {
+    main { padding: 4.8rem 1.1rem 3rem; }
+    #topbar { padding: .5rem .9rem; }
+    .topbar-title { display: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- Top bar -->
+<nav id="topbar">
+  <a class="home-link" href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">The Folio</a>
+  <span class="topbar-title">Book 21 — Asaph: A Summons from the Sanctuary</span>
+  <div class="topbar-controls">
+    <button class="ctrl-btn" id="font-down" title="Decrease font size">A−</button>
+    <button class="ctrl-btn" id="font-up" title="Increase font size">A+</button>
+    <button class="ctrl-btn" id="day-toggle">☀ Day</button>
+    <button class="ctrl-btn" id="toc-toggle">☰</button>
+  </div>
+</nav>
+
+<!-- TOC overlay -->
+<div id="toc-overlay"></div>
+
+<!-- TOC drawer -->
+<aside id="toc-drawer" role="dialog" aria-label="Contents">
+  <button id="toc-close" aria-label="Close contents">✕</button>
+  <h2>Contents</h2>
+  <ul>
+    <li><a href="#ch-0"><span class="toc-num">—</span>Before the Sanctuary (Prologue)</a></li>
+    <li><a href="#ch-1"><span class="toc-num">I</span>The Man Who Was Almost Gone</a></li>
+    <li><a href="#ch-2"><span class="toc-num">II</span>The Danger of Handling Holy Things</a></li>
+    <li><a href="#ch-3"><span class="toc-num">III</span>Until I Went Into the Sanctuary</a></li>
+    <li><a href="#ch-4"><span class="toc-num">IV</span>You Who Stand in the Work</a></li>
+    <li><a href="#ch-5"><span class="toc-num">V</span>The Crisis of Surrender</a></li>
+    <li><a href="#ch-interlude"><span class="toc-num">—</span>Nevertheless… (Interlude)</a></li>
+    <li><a href="#ch-6"><span class="toc-num">VI</span>The Quietness After the Breaking</a></li>
+    <li><a href="#ch-7"><span class="toc-num">VII</span>The Death of Self-Preservation</a></li>
+    <li><a href="#ch-8"><span class="toc-num">VIII</span>Held by God</a></li>
+    <li><a href="#ch-9"><span class="toc-num">IX</span>The Ministry of a Broken Man</a></li>
+    <li><a href="#ch-10"><span class="toc-num">X</span>God Himself Is Enough</a></li>
+    <li><a href="#ch-epilogue"><span class="toc-num">—</span>After the Sanctuary (Epilogue)</a></li>
+    <li><a href="#ch-poem"><span class="toc-num">—</span>Closing Poem</a></li>
+  </ul>
+</aside>
+
+<main>
+
+  <!-- Header -->
+  <div class="book-eyebrow">
+    <span>The Folio · Book 21</span>
+  </div>
+  <h1 class="book-title">Asaph: A Summons from the Sanctuary</h1>
+  <p class="book-subtitle">Meditations on Psalm 73</p>
+  <p class="book-desc">
+    A prophetic series in ten parts — drawn from the testimony of Asaph in Psalm 73 — on the man who ministered near holy things while quietly collapsing beneath them; who entered the sanctuary and emerged not with answers, but with God as his portion.
+  </p>
+
+  <hr class="rule" />
+
+  <!-- PROLOGUE -->
+  <section class="chapter" id="ch-0">
+    <div class="chapter-label">Prologue</div>
+    <h2 class="chapter-title">Before the Sanctuary</h2>
+    <div class="chapter-body">
+      <p>There are some psalms that instruct us. And there are others that uncover us.</p>
+      <p>Psalm 73 belongs to the latter.</p>
+      <p>For here we are not brought first into triumph, but into conflict. Not the conflict of a pagan man far from God — but the inward anguish of a man who ministered near holy things while quietly collapsing beneath them.</p>
+      <p>Asaph was no stranger to worship. He stood among the singers of Israel. He handled sacred things continually. He knew the language of God.</p>
+      <p>And yet, beneath all of it, another reality was growing: envy, weariness, confusion, inward strain. Until at last, the terrifying confession escaped his lips:</p>
+      <div class="stanza">
+        <span class="line">"My feet were almost gone."</span>
+      </div>
+      <p>This is not merely the testimony of one ancient saint. It is the hidden crisis of many who continue outwardly while weakening. Many who speak truth while quietly starving for communion with the God of truth. Many who labour in the work of God while drifting from the presence of God Himself.</p>
+      <p>And so, this is not merely a series of meditations. It is a summons.</p>
+      <p>A summons to leave the noise of outward religion and enter once more the sanctuary where God strips a man of illusion, breaks his confidence in self, and reveals Himself as the soul's only lasting portion.</p>
+      <div class="stanza">
+        <span class="line">Brethren —</span>
+        <span class="line">Enter carefully.</span>
+        <span class="line">For no man comes near the sanctuary unchanged.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- SECTION I HEADER -->
+  <div class="book-eyebrow" style="margin-bottom:1.8rem;">
+    <span>Section I — The Man Before the Sanctuary</span>
+  </div>
+
+  <!-- PART I -->
+  <section class="chapter" id="ch-1">
+    <div class="chapter-label">Part I</div>
+    <h2 class="chapter-title">The Man Who Was Almost Gone</h2>
+    <div class="chapter-body">
+      <p>It is a dreadful thing that a man may stand in the full blaze of ministry, handle sacred truth, lead others in worship, speak of God with clarity — and yet, in the secret chambers of his soul, be quietly unravelling.</p>
+      <p>Not outward. Not scandalous. But really.</p>
+      <p>Asaph was such a man. Placed among the chief musicians under David, entrusted with the praise of Israel, standing continually among holy things — and yet brought to this terrible confession:</p>
+      <div class="pull-quote">
+        "My feet were almost gone."
+        <cite>Psalm 73</cite>
+      </div>
+      <p>Not a false prophet. Not an idolater. Not a man abandoning truth. A man of God. Almost gone.</p>
+      <p>And mark this carefully — it did not come through open rebellion. It came through sight. He saw too much of what prospers without God. Too much ease among the ungodly. Too much applause around emptiness. And what he saw began to work upon him. Until he uttered the unthinkable:</p>
+      <div class="stanza">
+        <span class="line">"I was envious…"</span>
+      </div>
+      <p>There is a danger in seeing clearly while not being anchored deeply enough in God. You may discern errors. You may expose falsehood. You may preach the truth with precision. And still — be rotting inwardly.</p>
+      <p>Like Jonah — right in message, wrong in spirit. Near to truth, yet inwardly out of alignment with God.</p>
+      <p>Hear this well: if God does not possess you, the truths you preach will not sustain you. They will begin, slowly and silently, to crush you. And you may continue in ministry for years — while standing before God exactly where Asaph once stood:</p>
+      <div class="stanza">
+        <span class="line">Almost gone.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART II -->
+  <section class="chapter" id="ch-2">
+    <div class="chapter-label">Part II</div>
+    <h2 class="chapter-title">The Danger of Handling Holy Things</h2>
+    <div class="chapter-body">
+      <p>There is a peculiar danger in ministry. A man may spend so much time speaking about God that he no longer notices he is not truly walking with Him. He learns language. He learns doctrine. He learns how to move among sacred things. And because others continue receiving from him, he assumes all is well.</p>
+      <p>But heaven sees deeper.</p>
+      <p>The tragedy is not always open sin. Sometimes the tragedy is distance. A gradual inward withdrawal.</p>
+      <div class="stanza">
+        <span class="line">A man continues preaching — but no longer trembles.</span>
+        <span class="line">Continues studying — but is no longer broken.</span>
+        <span class="line">Continues discerning — but has ceased weeping.</span>
+      </div>
+      <p>And because his doctrine remains sound, no one suspects the inward decline.</p>
+      <p>We are given in Scripture the hidden failures of saints. We read of David's fall. Of Peter's denial. Of Jonah's resistance. We preach these things. We analyse them. We warn others through them.</p>
+      <p>But hear this carefully: if those truths do not first pass through you, they will eventually harden you. You will become a man who speaks of brokenness without ever being broken. A man who calls others to surrender while quietly withholding himself from God.</p>
+      <p>And ministry itself will become a weight. You will labour more, strive more, produce more — and inwardly grow weaker. Because no man can safely handle holy things while remaining distant from the Holy One.</p>
+    </div>
+  </section>
+
+  <!-- PART III -->
+  <section class="chapter" id="ch-3">
+    <div class="chapter-label">Part III</div>
+    <h2 class="chapter-title">Until I Went Into the Sanctuary</h2>
+    <div class="chapter-body">
+      <p>Then comes that line. Quiet. Simple. Terrifying in its implication.</p>
+      <div class="pull-quote">
+        "Until I went into the sanctuary of God…"
+        <cite>Psalm 73:17</cite>
+      </div>
+      <p>This was not a change of location. This was the collapse of self-sufficiency.</p>
+      <p>The man who had analysed others was now brought under the gaze of God Himself. And suddenly, the issue was no longer merely the wicked. The issue was Asaph. His envy. His pride. His inward questioning of God.</p>
+      <p>And he does not excuse himself. He says:</p>
+      <div class="stanza">
+        <span class="line">"So foolish was I… and ignorant."</span>
+      </div>
+      <p>This is the first mark of a man who has truly entered the sanctuary: he stops speaking chiefly about what is wrong around him and becomes undone by what is wrong within him.</p>
+    </div>
+  </section>
+
+  <!-- PART IV -->
+  <section class="chapter" id="ch-4">
+    <div class="chapter-label">Part IV</div>
+    <h2 class="chapter-title">You Who Stand in the Work</h2>
+    <div class="chapter-body">
+      <p>Now listen carefully. This is no longer about Asaph alone. This is about you.</p>
+      <div class="stanza">
+        <span class="line">You who preach.</span>
+        <span class="line">You who lead.</span>
+        <span class="line">You who stand before others speaking of God.</span>
+      </div>
+      <p>Answer honestly: has God truly become your portion? Not your doctrine. Not your message. Not your subject. Your portion.</p>
+      <p>Because you can preach Christ and still not be mastered by Him. You can defend truth and still live inwardly resistant to God.</p>
+      <p>And some of you know this already. You know the emptiness that comes when the noise stops. When the pulpit is gone. When the people leave. You know what it is to continue outwardly while inwardly carrying strain, distance, unrest.</p>
+      <p>And perhaps no one around you sees it. But you know. And God knows.</p>
+    </div>
+  </section>
+
+  <!-- PART V -->
+  <section class="chapter" id="ch-5">
+    <div class="chapter-label">Part V</div>
+    <h2 class="chapter-title">The Crisis of Surrender</h2>
+    <div class="chapter-body">
+      <div class="stanza">
+        <span class="line">Do not move.</span>
+        <span class="line">Do not look around.</span>
+        <span class="line">This is not for the man beside you.</span>
+        <span class="line">This is for you.</span>
+      </div>
+      <p>You have heard enough. You have agreed enough. You have nodded enough. Now answer before God: are you His? Not in appearance. Not in ministry. Not in reputation. In truth.</p>
+      <p>Or have you built an entire life around God while still withholding yourself from Him?</p>
+      <p>Many men want God to sustain them. Far fewer want God to undo them. But God will do both.</p>
+      <p>You cannot continue protecting self while asking to walk deeply with God. Sooner or later, He will touch the hidden thing. The inward reservation. The quiet self-rule. The secret insistence on remaining untouched.</p>
+      <p>And if you resist Him there, your ministry itself will become a burden too heavy to bear.</p>
+      <p>But if you yield — truly yield — something holy begins. The need to preserve yourself weakens. The need to appear strong begins dying. The need for recognition slowly loses its grip. And in that death comes liberty.</p>
+      <div class="stanza">
+        <span class="line">For the man who no longer belongs to himself</span>
+        <span class="line">becomes strangely free.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- INTERLUDE -->
+  <section class="chapter" id="ch-interlude">
+    <div class="interlude-label">Interlude</div>
+    <h2 class="chapter-title" style="font-size:clamp(1.3rem,4vw,1.9rem);">"Nevertheless…"</h2>
+    <div class="chapter-body">
+      <p>And yet — he did not fall. That is the wonder of Psalm 73.</p>
+      <div class="stanza">
+        <span class="line">A man shaken inwardly.</span>
+        <span class="line">A man clouded by envy.</span>
+        <span class="line">A man nearing collapse.</span>
+        <span class="line">And still — preserved.</span>
+      </div>
+      <p>Not because Asaph was stronger than he imagined. But because God was more faithful than Asaph knew.</p>
+      <div class="pull-quote">
+        "Nevertheless… Thou hast holden me by my right hand."
+        <cite>Psalm 73:23</cite>
+      </div>
+      <p>There is no triumph in those words. Only astonishment. The astonishment of a man discovering that beneath all his confusion, beneath all his inward instability, beneath all his hidden weakness — God had not released him.</p>
+      <p>There is an old scene in the wilderness. Israel stood at a distance. The camp lingered outside. Men watched from afar. But Moses entered within — beyond the noise, beyond the movement of the people, beyond the outward order of religion — into the tent where the presence of God descended. And there, everything became different.</p>
+      <p>So too with Asaph. He had looked too long upon men. Too long upon prosperity. Too long upon injustice, confusion, and the apparent triumph of the wicked. Until at last — he went into the sanctuary of God. Not merely nearer. Within.</p>
+      <p>And there, under the terrible mercy of God's presence, the world changed shape around him. The wicked no longer appeared secure. His envy no longer appeared reasonable. His own heart no longer appeared innocent.</p>
+      <p>And perhaps this is one of the tenderest mercies in all the dealings of God: that He does not cast off His people the moment they stagger. He wounds. He exposes. He strips away illusion. But He also holds — quietly, faithfully, completely.</p>
+      <div class="stanza">
+        <span class="line">And so Asaph emerges from the sanctuary</span>
+        <span class="line">no longer impressed with himself,</span>
+        <span class="line">no longer trusting his own stability,</span>
+        <span class="line">no longer certain of his own strength.</span>
+        <span class="line">But certain of this: God had kept him.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- SECTION II HEADER -->
+  <div class="book-eyebrow" style="margin-bottom:1.8rem;">
+    <span>Section II — The Man After the Sanctuary</span>
+  </div>
+
+  <!-- PART VI -->
+  <section class="chapter" id="ch-6">
+    <div class="chapter-label">Part VI</div>
+    <h2 class="chapter-title">The Quietness After the Breaking</h2>
+    <div class="chapter-body">
+      <p>When a man has truly passed through the sanctuary, the change in him is often quieter than others expect. Not dramatic outwardly. But inwardly — something has settled forever.</p>
+      <p>He no longer speaks as a man trying to prove himself. There is less striving in him now. Less hunger for recognition. Less dependence upon the response of men. For he has stood somewhere that made all lesser things appear painfully small.</p>
+      <p>And mark this carefully — such a man does not become careless. He becomes watchful. Because he remembers too clearly how near he once came to the edge. He remembers what it was to continue among sacred things while inwardly drifting from the God of those things. And the memory humbles him.</p>
+      <p>There is a tenderness that only broken men possess. Not weak men. Broken men. Men who no longer speak lightly of grace because grace is the only reason they still stand. Men who fear distance from God more than criticism from men.</p>
+      <p>And often, such men become quieter — not because they have less to say, but because they have learned how much of ministry can proceed without the presence of God truly resting upon it. And that discovery terrifies them.</p>
+      <div class="stanza">
+        <span class="line">There are men who know theology</span>
+        <span class="line">and there are men who know God.</span>
+        <span class="line">And usually, the difference is discovered in secret.</span>
+      </div>
+      <p>And when such a man rises to minister, there is often less polish than before. Less performance. Less sharpness. But strangely — more weight. For people begin sensing that he is no longer speaking from study alone. He has suffered there. He has wrestled there. He has been preserved there.</p>
+      <p>Not confidence in self. Confidence in the God who held him when his feet had almost slipped.</p>
+    </div>
+  </section>
+
+  <!-- PART VII -->
+  <section class="chapter" id="ch-7">
+    <div class="chapter-label">Part VII</div>
+    <h2 class="chapter-title">The Death of Self-Preservation</h2>
+    <div class="chapter-body">
+      <p>There is something deeply rooted in every man that does not die easily. Self-preservation. Not merely the preservation of life — but the preservation of self. The hidden insistence on remaining untouched. Unbroken. Unexposed. In control.</p>
+      <p>And even in ministry, this thing survives. Sometimes especially there.</p>
+      <div class="stanza">
+        <span class="line">A man learns how to labour for God</span>
+        <span class="line">while quietly protecting himself from God.</span>
+        <span class="line">He will give time. Strength. Study. Reputation.</span>
+        <span class="line">But not himself. Not fully.</span>
+      </div>
+      <p>And because this surrender has not taken place, there remains within him a constant strain. For there are two lives being carried at once. The life he presents before men — and the life he protects from God.</p>
+      <p>This cannot continue forever. Sooner or later, God will deal with it. And His dealings are often severe — not because He delights in breaking a man, but because He refuses to leave him untouched by grace.</p>
+      <p>And if a man bows beneath those dealings, something holy begins emerging. The need to be seen begins dying. The need to defend oneself weakens. The need to appear strong slowly loses its grip.</p>
+      <p>And in the place where self-preservation once ruled, there comes a strange liberty. A man becomes free — free to obey, free to decrease, free to be hidden, free even to suffer loss. Because he is no longer trying to preserve himself at all costs.</p>
+      <p>This is one of the clearest marks that a man has truly passed through the sanctuary:</p>
+      <div class="stanza">
+        <span class="line">He no longer belongs to himself.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART VIII -->
+  <section class="chapter" id="ch-8">
+    <div class="chapter-label">Part VIII</div>
+    <h2 class="chapter-title">Held by God</h2>
+    <div class="chapter-body">
+      <p>Perhaps one of the most astonishing discoveries in all of the Christian life is this: long before we began truly clinging to God — God had already been holding us.</p>
+      <p>Asaph did not emerge from the sanctuary boasting in newfound strength. He emerged astonished at mercy.</p>
+      <div class="pull-quote">
+        "Nevertheless… Thou hast holden me."
+        <cite>Psalm 73:23</cite>
+      </div>
+      <p>There is tenderness in those words. The tenderness of a man who has realised how near he came to ruin.</p>
+      <p>Some of you still imagine that you are being sustained by your discipline. Your consistency. Your understanding. Your carefulness. But if God withdrew His hand from you for one moment — you would fall farther than you dare imagine.</p>
+      <p>And the man who has truly passed through the sanctuary begins to know this deeply. Not merely as doctrine — but as reality. He no longer speaks confidently about himself. Not because he doubts God — but because he has ceased trusting his own flesh altogether.</p>
+      <p>And therefore there arises within him a strange mixture:</p>
+      <div class="stanza">
+        <span class="line">Great sobriety — and great rest.</span>
+        <span class="line">Sobriety, because he knows what he is apart from grace.</span>
+        <span class="line">Rest, because he has discovered that God's grip upon him</span>
+        <span class="line">is firmer than his grip upon God.</span>
+      </div>
+      <p>The strongest men in the kingdom are often those most aware of their weakness. Men who wake each day conscious that if God does not sustain them, they cannot stand. And strangely — such dependence does not weaken a man. It steadies him.</p>
+      <p>Because confidence in self is unstable by nature. But confidence in the preserving mercy of God produces a quiet endurance that survives storms, obscurity, disappointment, weakness — even failure.</p>
+      <p>And this is why some men endure decades in ministry without becoming hard, without becoming cynical, without collapsing inwardly. Not because they were naturally stronger than others. But because somewhere, often painfully, they learned this:</p>
+      <div class="stanza">
+        <span class="line">They were never holding themselves together.</span>
+        <span class="line">God was holding them.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART IX -->
+  <section class="chapter" id="ch-9">
+    <div class="chapter-label">Part IX</div>
+    <h2 class="chapter-title">The Ministry of a Broken Man</h2>
+    <div class="chapter-body">
+      <p>There is a kind of ministry that can be produced by giftedness alone. Natural ability. Strong intellect. Force of personality. Religious discipline. And for a time, it may even appear powerful.</p>
+      <p>But there is another kind of ministry that can only emerge from brokenness. Not brokenness as performance. Not cultivated humility. But the inward undoing of a man before the presence of God.</p>
+      <p>Such men are rarely impressive in the way the world measures greatness. Often, they carry fewer certainties about themselves than before. Less confidence in their own wisdom. Less fascination with their own strength. Because suffering has introduced them to themselves — and the sanctuary has stripped them of illusion.</p>
+      <div class="stanza">
+        <span class="line">The broken man no longer stands above the people</span>
+        <span class="line">when he ministers.</span>
+        <span class="line">He stands among them —</span>
+        <span class="line">as one upheld by the same mercy he proclaims.</span>
+      </div>
+      <p>He no longer preaches merely to instruct. He pleads. He warns. He grieves. Because he knows what it is to drift. He knows what it is to continue outwardly while inwardly weakening. And therefore there is a tenderness in him now. Not softness toward sin. Tenderness toward souls.</p>
+      <p>Some men preach as though truth were a weapon given merely to wound others. But the broken man remembers too clearly how truth first wounded him. And because of that, there is mercy in his severity. Even when he speaks strongly, there are tears hidden beneath it.</p>
+      <p>And strangely — such brokenness produces strength. Not loudness. Not harshness. Strength. The strength to remain faithful without applause. The strength to continue when unseen. The strength to decrease quietly while Christ becomes greater.</p>
+      <div class="stanza">
+        <span class="line">The world celebrates charisma.</span>
+        <span class="line">Heaven trusts broken men.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART X -->
+  <section class="chapter" id="ch-10">
+    <div class="chapter-label">Part X</div>
+    <h2 class="chapter-title">God Himself Is Enough</h2>
+    <div class="chapter-body">
+      <p>The end of Asaph's journey is not merely recovery. It is discovery.</p>
+      <p>At the beginning of the psalm, his eyes were filled with many things — the prosperity of the wicked, the confusion of life, the apparent contradictions surrounding him. But at the end, all things have narrowed into one great reality:</p>
+      <div class="pull-quote">
+        "Whom have I in heaven but Thee?<br />And there is none upon earth that I desire beside Thee."
+        <cite>Psalm 73:25</cite>
+      </div>
+      <p>This is not the language of religious poetry. This is the confession of a man who has discovered the insufficiency of everything else.</p>
+      <p>There comes a point in the dealings of God where He begins removing every lesser confidence. Not to destroy a man — but to bring him at last to the only place where the soul can truly rest. In God Himself. Not in ministry. Not in usefulness. Not in stability. Not in answered questions. For all these things can shake. All these things can fade. But God remains.</p>
+      <p>And the man who has truly passed through the sanctuary begins slowly discovering that what his soul desired all along was not ultimately clarity, success, influence, or even relief — but God.</p>
+      <div class="stanza">
+        <span class="line">Not that the man escapes suffering.</span>
+        <span class="line">But that suffering itself drives him deeper into God.</span>
+      </div>
+      <p>And suddenly the cry of Asaph becomes his own: "Whom have I in heaven but Thee?" — not merely as theology, but as reality.</p>
+      <p>Brethren — God will sometimes weaken every other support in a man's life until the man finally learns:</p>
+      <div class="stanza">
+        <span class="line">God Himself is enough.</span>
+        <span class="line">Enough when ministry feels barren.</span>
+        <span class="line">Enough when prayers seem unanswered.</span>
+        <span class="line">Enough when strength fails.</span>
+        <span class="line">Enough when the soul passes through darkness.</span>
+      </div>
+      <p>For the great triumph of Psalm 73 is not that Asaph understood everything. It is that he emerged from the sanctuary with God Himself as his portion.</p>
+      <p>And there is no greater mercy that can be given to a man.</p>
+      <p>If God allows you to keep your strength, your usefulness, your ministry, your influence — but you do not gain Him deeply — you remain poor indeed. But if all else is stripped away, and you gain God truly — you have lost nothing of eternal worth.</p>
+      <div class="stanza">
+        <span class="line">Go to the sanctuary. Remain there.</span>
+        <span class="line">And do not rise satisfied until God becomes so precious to you</span>
+        <span class="line">that losing everything else would seem a small thing beside losing Him.</span>
+        <span class="line">For when God Himself becomes a man's portion —</span>
+        <span class="line">his soul has come home.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- EPILOGUE -->
+  <section class="chapter" id="ch-epilogue">
+    <div class="chapter-label">Epilogue</div>
+    <h2 class="chapter-title">After the Sanctuary</h2>
+    <div class="chapter-body">
+      <p>And now the sanctuary grows quiet.</p>
+      <p>The striving has ceased. The arguments have faded. The restless gaze toward lesser things has at last been stilled.</p>
+      <p>And there, beyond the noise of ministry, reputation, fear, ambition, disappointment, and self-preservation — God remains. Not merely as doctrine. Not merely as truth defended. But as Portion. As Life. As Enough.</p>
+      <p>This was the final mercy granted to Asaph: not that every question was answered, but that through the painful dealings of God, he was brought at last to the discovery that the Lord Himself was dearer than all that once troubled him.</p>
+      <p>And perhaps this is the deepest lesson of the sanctuary: that God will sometimes allow a man to come terrifyingly near collapse in order to teach him that he was never being held together by strength, giftedness, ministry, or understanding — but by God alone.</p>
+      <div class="stanza">
+        <span class="line">Brethren —</span>
+        <span class="line">guard your nearness to Him.</span>
+        <span class="line">For a man may gain influence and yet lose tenderness.</span>
+        <span class="line">He may gain knowledge and yet lose communion.</span>
+        <span class="line">He may continue ministering and yet quietly drift</span>
+        <span class="line">from the Holy One Himself.</span>
+      </div>
+      <p>Do not live there. Go often to the sanctuary. Remain long there. And do not rise too quickly from that sacred place until God Himself becomes more precious to you than all the things that once competed for your soul.</p>
+      <p>For when God becomes a man's portion — then at last, though trials remain and weakness continues — his soul has come home.</p>
+      <div class="stanza">
+        <span class="line">God Himself is enough.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- CLOSING POEM -->
+  <section class="chapter poem-section" id="ch-poem">
+    <div class="poem-title-block">
+      <span class="poem-title-spaced">A Summons from the Sanctuary</span>
+      <div class="poem-meter-label">Common Meter · JaceyLang</div>
+    </div>
+    <div class="poem-stanzas">
+
+      <div class="stanza">
+        <span class="line">I stood among the sacred things,</span>
+        <span class="line">My lips still moved in praise,</span>
+        <span class="line">Yet inward drought had long begun</span>
+        <span class="line">To hollow out my days.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">My feet were near the edge of loss,</span>
+        <span class="line">My soul had almost gone;</span>
+        <span class="line">I watched the wicked flourish free</span>
+        <span class="line">And wondered why I'd walked on.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">I spoke of breaking — yet stood whole,</span>
+        <span class="line">I warned of drifting — yet was far;</span>
+        <span class="line">The truth I preached had harder grown,</span>
+        <span class="line">A weight without its star.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Until I went — not where men stand —</span>
+        <span class="line">But where the veil hangs thin;</span>
+        <span class="line">Where God no longer talks of them</span>
+        <span class="line">But searches all within.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">And there, beneath His searching gaze,</span>
+        <span class="line">The foolish self confessed;</span>
+        <span class="line">The envy and the guarded place</span>
+        <span class="line">Were brought to open rest.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">He did not cast me in that hour,</span>
+        <span class="line">Nor leave me with my shame;</span>
+        <span class="line">He held me by my right hand still,</span>
+        <span class="line">Before I knew He came.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Now self-preserving has grown weak,</span>
+        <span class="line">Now lesser things have paled;</span>
+        <span class="line">The need to be seen, to be praised, to remain</span>
+        <span class="line">Has slowly been curtailed.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">For in the breaking, mercy spoke</span>
+        <span class="line">A word I could not earn:</span>
+        <span class="line">That God Himself was all I'd sought</span>
+        <span class="line">In all for which I'd burn.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Whom have I now in all the heavens?</span>
+        <span class="line">Whom on earth beside?</span>
+        <span class="line">These are no longer doctrines held —</span>
+        <span class="line">They are where I reside.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">O soul, go in — not to perform,</span>
+        <span class="line">Not to return unscarred;</span>
+        <span class="line">For in the sanctuary, God will make</span>
+        <span class="line">A man of whom He's guard.</span>
+      </div>
+
+      <div class="poem-coda">
+        O Lord, I come not with my strength,<br />
+        Nor with the words I've known;<br />
+        I come as one whose feet had slipped,<br />
+        Now held by Thee alone.
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- STUDY QUESTIONS (collapsed visually, available to scroll) -->
+  <section class="chapter" id="ch-study">
+    <div class="chapter-label">Study &amp; Reflection</div>
+    <h2 class="chapter-title" style="font-size:clamp(1.2rem,3vw,1.6rem);">Questions for Personal Use</h2>
+    <div class="chapter-body">
+
+      <div class="study-section">
+        <h3>Prologue — Before the Sanctuary</h3>
+        <ol>
+          <li>In what ways can outward ministry activity hide inward spiritual decline?</li>
+          <li>Have you ever found yourself speaking truth while quietly starving for communion with God? What does that look like in your life?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part I — The Man Who Was Almost Gone</h3>
+        <ol>
+          <li>Asaph's crisis began with what he saw. How can seeing clearly become dangerous without deep anchorage in God?</li>
+          <li>"If God does not possess you, the truths you preach will not sustain you." How have you experienced this tension?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part II — The Danger of Handling Holy Things</h3>
+        <ol>
+          <li>Why is it possible to continue in ministry while slowly drifting from God? What are the warning signs?</li>
+          <li>In what areas of your life have you been speaking of brokenness without ever being broken?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part III — Until I Went Into the Sanctuary</h3>
+        <ol>
+          <li>What was the turning point for Asaph? What does it mean practically to enter the sanctuary today?</li>
+          <li>Describe a time when God shifted your focus from the sins of others to your own heart.</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part IV — You Who Stand in the Work</h3>
+        <ol>
+          <li>"Has God truly become your portion — not your doctrine, not your message?" Answer honestly before God.</li>
+          <li>When the noise stops, what do you usually find in your soul?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part V — The Crisis of Surrender</h3>
+        <ol>
+          <li>What is the difference between wanting God to sustain you and wanting Him to undo you?</li>
+          <li>What is one area of self-rule or reservation you sense God is touching right now?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Interlude — "Nevertheless…"</h3>
+        <ol>
+          <li>How does the truth that "God has holden me" bring comfort in seasons of weakness and confusion?</li>
+          <li>In what ways has God preserved you even when you were drifting?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part VI — The Quietness After the Breaking</h3>
+        <ol>
+          <li>What changes — inward and outward — typically happen in a person after a true sanctuary encounter?</li>
+          <li>Why do broken men often become quieter yet weightier in ministry?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part VII — The Death of Self-Preservation</h3>
+        <ol>
+          <li>Why is self-preservation so stubborn, even in ministry?</li>
+          <li>What would it look like for you to truly stop belonging to yourself?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part VIII — Held by God</h3>
+        <ol>
+          <li>How does realising that God has been holding you change the way a person walks with Him?</li>
+          <li>Are you more aware of your weakness or your strength right now? Why does this matter?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part IX — The Ministry of a Broken Man</h3>
+        <ol>
+          <li>Contrast ministry from giftedness versus ministry from brokenness. Which is more evident in your life?</li>
+          <li>How can brokenness produce greater tenderness and strength?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Part X — God Himself Is Enough</h3>
+        <ol>
+          <li>What lesser things have you sometimes desired more than God Himself?</li>
+          <li>What would it practically mean for God Himself to become enough in your current season?</li>
+        </ol>
+      </div>
+
+      <div class="study-section">
+        <h3>Epilogue — After the Sanctuary</h3>
+        <ol>
+          <li>What does it mean to guard your nearness to Him? What practical steps will you take?</li>
+          <li>After reading this book, what is the single most important thing God is saying to you?</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/book-20.html">← Book 20</a>
+    <a href="#top" class="nav-top">↑ Top</a>
+    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/book-22.html">Book 22 →</a>
+  </nav>
+
+  <div style="height:.6rem;"></div>
+  <div style="text-align:center;margin-top:1.2rem;">
+    <a href="#top" style="font-size:.78rem;color:var(--text-faint);text-decoration:none;letter-spacing:.06em;">↑ Top</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>
+    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">The Folio</a>
+    &nbsp;·&nbsp; Book 21 &nbsp;·&nbsp; Private Works
+  </div>
+  <div style="margin-top:.4rem;">
+    <a href="https://jaceytrayd-invest.github.io/JaceyLang-Pvt/index.html">← All Books</a>
+  </div>
+</footer>
+
+<script>
+  // ── Font size ──
+  const root = document.documentElement;
+  const sizes = ['.95rem','1.05rem','1.2rem','1.35rem','1.5rem','1.65rem'];
+  let sizeIdx = 2;
+  document.getElementById('font-down').addEventListener('click', () => {
+    if (sizeIdx > 0) { sizeIdx--; root.style.setProperty('--fs', sizes[sizeIdx]); }
+  });
+  document.getElementById('font-up').addEventListener('click', () => {
+    if (sizeIdx < sizes.length - 1) { sizeIdx++; root.style.setProperty('--fs', sizes[sizeIdx]); }
+  });
+
+  // ── Day/Night ──
+  const dayBtn = document.getElementById('day-toggle');
+  dayBtn.addEventListener('click', () => {
+    document.body.classList.toggle('day-mode');
+    dayBtn.textContent = document.body.classList.contains('day-mode') ? '☽ Night' : '☀ Day';
+  });
+
+  // ── TOC ──
+  const drawer  = document.getElementById('toc-drawer');
+  const overlay = document.getElementById('toc-overlay');
+  const openTOC  = () => { drawer.classList.add('open'); overlay.classList.add('open'); };
+  const closeTOC = () => { drawer.classList.remove('open'); overlay.classList.remove('open'); };
+  document.getElementById('toc-toggle').addEventListener('click', openTOC);
+  document.getElementById('toc-close').addEventListener('click', closeTOC);
+  overlay.addEventListener('click', closeTOC);
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeTOC));
+</script>
+</body>
+</html>
